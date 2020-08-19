@@ -7,14 +7,14 @@ const axios = require('axios');
 const qs = require('qs');
 
 class BasicClient {
-  httpClient = axios.create();
   constructor(config = {}, request_mws = [], response_mws = []) {
     let baseURL = process.env.API_ROOT;
     let timeout = 20000;
     if (typeof config.service === 'string') {
       baseURL = baseURL + config.service;
     }
-    this.h
+    this.httpClient = axios.create();
+
     const headers = {'Content-Type':'application/json'};
     const options = {
       baseURL,
