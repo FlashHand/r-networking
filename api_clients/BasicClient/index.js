@@ -85,8 +85,9 @@ class BasicClient {
   }
 
   createPut(url, params = {}, type = '') {
+    let headers = {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'}};
     return new Promise((resolve, reject) => [
-      axios.put(url, qs.stringify(params, type)).then(res => {
+      this.httpClient.put(url, qs.stringify(params, type),headers).then(res => {
         resolve(res.data);
       }).catch(e => {
         reject(e);
