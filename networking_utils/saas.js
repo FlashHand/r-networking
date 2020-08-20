@@ -15,7 +15,5 @@ const generateClients = (service = '',request_mws=[],response_mws=[]) => {
  }
 };
 module.exports = {
-  generateClients,
-  addDefaultReqMiddleware,
-  addDefaultResMiddleware
+  generateClients
 }

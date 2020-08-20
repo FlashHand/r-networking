@@ -14,7 +14,7 @@ const fullfilled = (config) => {
 const rejected = (error) => {
   return Promise.reject(error);
 };
-const set = ()=>{
+const set = (mws)=>{
   preReqMWs = mws;
 }
 module.exports = {
