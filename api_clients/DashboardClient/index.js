@@ -7,7 +7,7 @@ const BasicClient = require('../BasicClient');
 const MWSlotsManager = require('../MWSlotsManager');
 const mw_slots_manager = new MWSlotsManager();
 
-class SaasClient extends BasicClient {
+class DashboardClient extends BasicClient {
   constructor(config = {}, request_mws = [], response_mws = []) {
     request_mws.unshift(mw_slots_manager.req_pre);
     request_mws.push(mw_slots_manager.req_sub);
@@ -17,5 +17,5 @@ class SaasClient extends BasicClient {
   }
 }
 
-SaasClient.mw_slots_manager = mw_slots_manager;
-module.exports = SaasClient;
+DashboardClient.mw_slots_manager = mw_slots_manager;
+module.exports = DashboardClient;
