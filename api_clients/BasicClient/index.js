@@ -10,6 +10,9 @@ class BasicClient {
   constructor(config = {}, request_mws = [], response_mws = []) {
     let baseURL = process.env.VUE_APP_API_ROOT;
     let timeout = 20000;
+    if (typeof config.baseURL === 'string') {
+      baseURL = config.baseURL;
+    }
     if (typeof config.service === 'string') {
       baseURL = baseURL + config.service;
     }
