@@ -8,7 +8,7 @@ const qs = require('qs');
 
 class BasicClient {
   constructor(config = {}, request_mws = [], response_mws = []) {
-    let baseURL = process.env.API_ROOT;
+    let baseURL = process.env.VUE_APP_API_ROOT;
     let timeout = 20000;
     if (typeof config.service === 'string') {
       baseURL = baseURL + config.service;
