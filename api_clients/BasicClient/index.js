@@ -9,7 +9,7 @@ const qs = require('qs');
 class BasicClient {
   constructor(config = {}, request_mws = [], response_mws = []) {
     //为请求和返回中间件数组，增加中间件头尾插槽
-    let baseURL = process.env.BASE_URL||process.env.VUE_APP_API_ROOT||process.env.API_ROOT;
+    let baseURL = process.env.VUE_APP_BASE_URL||process.env.VUE_APP_API_ROOT||process.env.API_ROOT||process.env.VUE_APP_BASE_URL;
     let timeout = 20000;
     if (typeof config.baseURL === 'string') {
       baseURL = config.baseURL;
