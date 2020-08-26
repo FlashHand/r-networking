@@ -24,9 +24,13 @@ class MWClass {
 
 class MWSlotsManager {
   constructor() {
+    //请求前置插槽中间件
     this.req_pre = new MWClass();
+    //请求后置插槽中间件
     this.res_pre = new MWClass();
+    //返回前置插槽中间件
     this.req_sub = new MWClass();
+    //返回后置插槽中间件
     this.res_sub = new MWClass();
   }
 
