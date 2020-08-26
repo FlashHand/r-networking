@@ -1,0 +1,32 @@
+.DS_Store
+node_modules/
+!.gitkeep
+# projects/*
+# common/*
+!common/.gitkeep
+!projects/.gitkeep
+.idea/
+.vscode/
+node_modules__/
+yarn-error.log
+lerna-debug.log
+/dist
+/dist_aas
+/dist_pre
+/dist_test
+# local env files
+.env.local
+.env.*.local
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+# Editor directories and files
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw*
+/rys_dist
+/51_dist
+
