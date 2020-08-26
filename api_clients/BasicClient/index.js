@@ -5,9 +5,16 @@
  */
 const axios = require('axios');
 const qs = require('qs');
+const MWSlotsManager = require('../MWSlotsManager');
 
 class BasicClient {
   constructor(config = {}, request_mws = [], response_mws = []) {
+    let mw_slots_manager = new MWSlotsManager();
+    //为请求和返回中间件数组，增加中间件头尾插槽
+    request_mws.unshift(mw_slots_manager.req_pre);
+    request_mws.push(mw_slots_manager.req_sub);
+    response_mws.unshift(mw_slots_manager.req_pre);
+    response_mws.push(mw_slots_manager.req_sub);
     let baseURL = process.env.BASE_URL||process.env.VUE_APP_API_ROOT||process.env.API_ROOT;
     let timeout = 20000;
     if (typeof config.baseURL === 'string') {

@@ -6,6 +6,7 @@
 const BasicClient = require('../BasicClient');
 const req_pre_mw = require('./req_pre_mw');
 const res_sub_mw = require('./res_sub_mw');
+
 class SaasClient extends BasicClient {
   constructor(config = {}, request_mws = [], response_mws = []) {
     request_mws.unshift(req_pre_mw);
