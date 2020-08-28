@@ -10,19 +10,22 @@ const fullfilled = (response) => {
     let resMsg = response.data.msg;
     response.data.message = response.data.msg;
     response.data.code = parseInt(response.data.code);
-    if (resBody.list) {
-      response.data.res = resBody.list
-      response.data.data = resBody.list;
-      for (let key in resBody) {
-        if (key !== 'list') {
-          response.data[key] = resBody[key];
-        }
-      }
-    }else{
-      response.data.res = resBody;
-      response.data.res.code = resCode;
-      response.data.res.msg = resMsg;
-    }
+    response.data.res = resBody;
+    response.data.res.code = resCode;
+    response.data.res.msg = resMsg;
+    // if (resBody.list) {
+    //   response.data.res = resBody.list
+    //   response.data.data = resBody.list;
+    //   for (let key in resBody) {
+    //     if (key !== 'list') {
+    //       response.data[key] = resBody[key];
+    //     }
+    //   }
+    // }else{
+    //   response.data.res = resBody;
+    //   response.data.res.code = resCode;
+    //   response.data.res.msg = resMsg;
+    // }
   } catch (e) {
 
   }
