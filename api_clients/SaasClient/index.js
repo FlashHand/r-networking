@@ -6,13 +6,18 @@
 const BasicClient = require('../BasicClient');
 const req_pre_mw = require('./req_pre_mw');
 const res_sub_mw = require('./res_sub_mw');
+const MWSlotsManager = require('../MWSlotsManager');
+const mw_slots_manager = new MWSlotsManager();
 
 class SaasClient extends BasicClient {
   constructor(config = {}, request_mws = [], response_mws = []) {
-    request_mws.unshift(req_pre_mw);
-    response_mws.push(res_sub_mw);
+    request_mws.unshift(mw_slots_manager.req_pre);
+    request_mws.push(mw_slots_manager.req_sub);
+    response_mws.unshift(mw_slots_manager.req_pre);
+    response_mws.push(mw_slots_manager.req_sub);
     super(config, request_mws, response_mws)
   }
 }
 
+SaasClient.mw_slots_manager = mw_slots_manager;
 module.exports = SaasClient;

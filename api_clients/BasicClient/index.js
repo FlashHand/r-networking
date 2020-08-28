@@ -5,18 +5,15 @@
  */
 const axios = require('axios');
 const qs = require('qs');
-const MWSlotsManager = require('../MWSlotsManager');
-
+const resHandler = (res,isRaw=false)=>{
+  return isRaw ? res : res.data;
+}
 class BasicClient {
-  constructor(config = {}, request_mws = [], response_mws = []) {
-    let mw_slots_manager = new MWSlotsManager();
+  constructor(config = {isRaw:false}, request_mws = [], response_mws = []) {
     //为请求和返回中间件数组，增加中间件头尾插槽
-    request_mws.unshift(mw_slots_manager.req_pre);
-    request_mws.push(mw_slots_manager.req_sub);
-    response_mws.unshift(mw_slots_manager.req_pre);
-    response_mws.push(mw_slots_manager.req_sub);
-    let baseURL = process.env.BASE_URL||process.env.VUE_APP_API_ROOT||process.env.API_ROOT;
+    let baseURL = process.env.VUE_APP_BASE_URL||process.env.VUE_APP_API_ROOT||process.env.API_ROOT||process.env.VUE_APP_BASE_URL;
     let timeout = 20000;
+    this.isRaw = config.isRaw;
     if (typeof config.baseURL === 'string') {
       baseURL = config.baseURL;
     }
@@ -50,7 +47,7 @@ class BasicClient {
           return qs.stringify(params, {arrayFormat: 'indices'})
         }
       }).then(res => {
-        resolve(res.data);
+        resolve(resHandler(res,this.isRaw));
       }).catch(e => {
         reject(e);
       });
@@ -66,7 +63,7 @@ class BasicClient {
           return qs.stringify(params, {arrayFormat: 'indices'})
         }
       }).then(res => {
-        resolve(res)
+        resolve(resHandler(res, this.isRaw));
       }).catch(e => {
         reject(e)
       })
@@ -76,7 +73,7 @@ class BasicClient {
   createPostJSON(url, params = {}) {
     return new Promise((resolve, reject) => {
       this.httpClient.post(url, params).then(res => {
-        resolve(res.data);
+        resolve(resHandler(res,this.isRaw));
       }).catch(e => {
         reject(e);
       });
@@ -87,7 +84,7 @@ class BasicClient {
     return new Promise((resolve, reject) => {
       let headers = {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'}};
       this.httpClient.post(url, qs.stringify(params, type), headers).then(res => {
-        resolve(res.data);
+        resolve(resHandler(res,this.isRaw));
       }).catch(e => {
         reject(e);
       });
@@ -98,7 +95,7 @@ class BasicClient {
     let headers = {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'}};
     return new Promise((resolve, reject) => [
       this.httpClient.put(url, qs.stringify(params, type),headers).then(res => {
-        resolve(res.data);
+        resolve(resHandler(res,this.isRaw));
       }).catch(e => {
         reject(e);
       })
@@ -109,7 +106,7 @@ class BasicClient {
     let headers = {headers: {'Content-Type': 'multipart/form-data'}};
     return new Promise((resolve, reject) => {
       this.httpClient.post(url, formData, headers).then(res => {
-        resolve(res.data)
+        resolve(resHandler(res,this.isRaw));
       }).catch(e => {
         reject(e)
       })
@@ -120,7 +117,8 @@ class BasicClient {
     return new Promise((resolve, reject) => {
       let headers = {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'}};
       this.httpClient.post(url, qs.stringify(params, {arrayFormat: 'indices', allowDots: true}),headers).then(res => {
-        resolve(res.data)
+        resolve(resHandler(res,this.isRaw))
+
       }).catch(e => {
         reject(e)
       })
@@ -129,7 +127,8 @@ class BasicClient {
   createDelete(url, params = {}){
     return new Promise((resolve, reject) => {
       this.httpClient.delete(url, {params}).then(res => {
-        resolve(res.data)
+        resolve(resHandler(res,this.isRaw))
+
       }).catch(e => {
         reject(e)
       })

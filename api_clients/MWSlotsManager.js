@@ -4,32 +4,34 @@
  * @date 2020/8/26 5:24 PM
  */
 class MWClass {
-  mws = [];
-  fullfilled = (config) => {
-    let finalConfig = config;
-    for (let mw of this.mws){
-      finalConfig = mw.fullfilled(config);
-    }
-    return finalConfig;
-  };
-  rejected = (error) => {
-    return Promise.reject(error);
-  };
+  constructor() {
+    this.mws = [];
+    this.fullfilled = (config) => {
+      let finalConfig = config;
+      for (let mw of this.mws){
+        finalConfig = mw.fullfilled(config);
+      }
+      return finalConfig;
+    };
+    this.rejected = (error) => {
+      return Promise.reject(error);
+    };
+  }
   set(injectedMWs){
     this.mws = injectedMWs;
-  }
-  constructor() {
-
   }
 }
 
 class MWSlotsManager {
-  req_pre = new MWClass();
-  res_pre = new MWClass();
-  req_sub = new MWClass();
-  res_sub = new MWClass();
   constructor() {
-
+    //请求前置插槽中间件
+    this.req_pre = new MWClass();
+    //请求后置插槽中间件
+    this.res_pre = new MWClass();
+    //返回前置插槽中间件
+    this.req_sub = new MWClass();
+    //返回后置插槽中间件
+    this.res_sub = new MWClass();
   }
 
 }
