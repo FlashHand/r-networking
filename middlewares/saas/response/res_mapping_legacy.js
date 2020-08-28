@@ -13,19 +13,7 @@ const fullfilled = response => {
     response.data.res = resBody
     response.data.res.code = resCode
     response.data.res.msg = resMsg
-    // if (resBody.list) {
-    //   response.data.res = resBody.list
-    //   response.data.data = resBody.list;
-    //   for (let key in resBody) {
-    //     if (key !== 'list') {
-    //       response.data[key] = resBody[key];
-    //     }
-    //   }
-    // }else{
-    //   response.data.res = resBody;
-    //   response.data.res.code = resCode;
-    //   response.data.res.msg = resMsg;
-    // }
+    // eslint-disable-next-line 
   } catch (e) {}
   return response
 }
