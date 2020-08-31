@@ -6,6 +6,8 @@
 const fullfilled = response => {
   try {
     let resBody = response.data.data || {}
+    //后端有时会不返回data，在这时我们需要手动把data设为{}
+    response.data.data = resBody;
     let resCode = parseInt(response.data.code)
     let resMsg = response.data.msg
     response.data.message = response.data.msg
@@ -14,7 +16,9 @@ const fullfilled = response => {
     response.data.res.code = resCode
     response.data.res.msg = resMsg
     // eslint-disable-next-line 
-  } catch (e) {}
+  } catch (e) {
+    console.log(e);
+  }
   return response
 }
 const rejected = error => {
