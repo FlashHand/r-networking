@@ -4,8 +4,6 @@
  * @date 2020/8/7 11:46 AM
  */
 const BasicClient = require('../BasicClient');
-const req_pre_mw = require('./req_pre_mw');
-const res_sub_mw = require('./res_sub_mw');
 const MWSlotsManager = require('../MWSlotsManager');
 const mw_slots_manager = new MWSlotsManager();
 
