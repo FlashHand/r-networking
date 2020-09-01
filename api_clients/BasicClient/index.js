@@ -105,7 +105,7 @@ class BasicClient {
   createPutBody(url, params = {}, type = '') {
     let headers = {headers: {'Content-Type': 'application/json;charset=utf-8'}};
     return new Promise((resolve, reject) => [
-      this.httpClient.put(url, params).then(res => {
+      this.httpClient.put(url, params , headers).then(res => {
         resolve(resHandler(res,this.isRaw));
       }).catch(e => {
         reject(e);
