@@ -11,8 +11,8 @@ class SaasClient extends BasicClient {
   constructor(config = {}, request_mws = [], response_mws = []) {
     request_mws.unshift(mw_slots_manager.req_pre);
     request_mws.push(mw_slots_manager.req_sub);
-    response_mws.unshift(mw_slots_manager.req_pre);
-    response_mws.push(mw_slots_manager.req_sub);
+    response_mws.unshift(mw_slots_manager.res_pre);
+    response_mws.push(mw_slots_manager.res_sub);
     super(config, request_mws, response_mws)
   }
 }

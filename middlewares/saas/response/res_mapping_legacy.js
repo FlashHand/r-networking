@@ -3,7 +3,7 @@
  * @author Wang Bo (ralwayne@163.com)
  * @date 2020/8/7 11:10 AM
  */
-const fullfilled = (response) => {
+const fullfilled = response => {
   try {
     //data不是对象时不处理
     if (typeof  response.data.data == 'number'||typeof response.data.data == 'string') return response;
@@ -30,14 +30,14 @@ const fullfilled = (response) => {
     //   response.data.res.msg = resMsg;
     // }
   } catch (e) {
-
+    console.log(e);
   }
-  return response;
-};
-const rejected = (error) => {
-  return Promise.reject(error);
-};
-module.exports =  {
+  return response
+}
+const rejected = error => {
+  return Promise.reject(error)
+}
+module.exports = {
   fullfilled,
   rejected
 }

@@ -4,10 +4,10 @@
  * @date 2020/8/7 11:10 AM
  */
 const funnyList = [
-  '/api/currencyInfoRpc/getCurrencyInfoMap',
-  '/api/accountinfo/get/days',
-  '/api/finance/actCapitalHabitSetting/getActCapitalHabitSetting',
-  '/api/actInvoiceInfo/getSettleList'
+  // '/api/currencyInfoRpc/getCurrencyInfoMap',
+  // '/api/accountinfo/get/days',
+  // '/api/finance/actCapitalHabitSetting/getActCapitalHabitSetting',
+  // '/api/actInvoiceInfo/getSettleList'
 ]
 const fullfilled = (response) => {
   try {
