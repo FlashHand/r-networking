@@ -1,0 +1,10 @@
+/*
+ * @Author: 冯丹凤
+ * @Date: 2020-08-25 11:20:27
+ * @LastEditors: 冯丹凤
+ * @LastEditTime: 2020-08-25 17:40:58
+ * @Description: 原 /rys-crm-pool 转成 /crm-customer
+ */
+
+const saas = require('../../networking_utils/saas');
+module.exports = saas.generateClients('/crm-pool');
