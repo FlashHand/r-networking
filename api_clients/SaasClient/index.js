@@ -5,22 +5,25 @@
  */
 const BasicClient = require('../BasicClient');
 const MWSlotsManager = require('../MWSlotsManager');
+const res_handler = require('../../middlewares/saas/response/res_handler');
 const mw_slots_manager = new MWSlotsManager();
 const mw_slots_manager_legacy = new MWSlotsManager();
 
 class SaasClient extends BasicClient {
   constructor(config = {}, request_mws = [], response_mws = []) {
-    if(config.isLegacy){
+    if (config.isLegacy) {
       request_mws.unshift(mw_slots_manager_legacy.req_pre);
       request_mws.push(mw_slots_manager_legacy.req_sub);
       response_mws.unshift(mw_slots_manager_legacy.res_pre);
       response_mws.push(mw_slots_manager_legacy.res_sub);
-    }else{
+    } else {
       request_mws.unshift(mw_slots_manager.req_pre);
       request_mws.push(mw_slots_manager.req_sub);
       response_mws.unshift(mw_slots_manager.res_pre);
       response_mws.push(mw_slots_manager.res_sub);
     }
+    //res_handler完全通用，res中间件头部
+    response_mws.unshift(res_handler);
     super(config, request_mws, response_mws)
   }
 }
