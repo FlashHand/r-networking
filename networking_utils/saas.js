@@ -10,8 +10,8 @@ const generateClients = (service = '', request_mws = [], response_mws = []) => {
   legacy_response_mws.unshift(res_mapping_legacy);
   return {
     client: new SaasClient({service}, request_mws, response_mws),
-    legacyClient: new SaasClient({service}, request_mws, legacy_response_mws),
-    legacyRawClient: new SaasClient({service, isRaw: true}, request_mws, legacy_response_mws)
+    legacyClient: new SaasClient({service, isLegacy: true}, request_mws, legacy_response_mws),
+    legacyRawClient: new SaasClient({service, isRaw: true, isLegacy: true}, request_mws, legacy_response_mws)
   }
 };
 module.exports = {

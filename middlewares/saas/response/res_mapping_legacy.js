@@ -6,8 +6,9 @@
 const fullfilled = response => {
   try {
     //data不是对象时不处理
-    if (typeof  response.data.data == 'number'||typeof response.data.data == 'string') return response;
-    let resBody = response.data.data||{};
+    if (response.data.data === undefined)response.data.data = {};
+    if (typeof  response.data.data != 'object') return response;
+    let resBody = response.data.data;
     let resCode = parseInt(response.data.code);
     let resMsg = response.data.msg;
     response.data.message = response.data.msg;
@@ -15,20 +16,6 @@ const fullfilled = response => {
     response.data.res = resBody;
     response.data.res.code = resCode;
     response.data.res.msg = resMsg;
-
-    // if (resBody.list) {
-    //   response.data.res = resBody.list
-    //   response.data.data = resBody.list;
-    //   for (let key in resBody) {
-    //     if (key !== 'list') {
-    //       response.data[key] = resBody[key];
-    //     }
-    //   }
-    // }else{
-    //   response.data.res = resBody;
-    //   response.data.res.code = resCode;
-    //   response.data.res.msg = resMsg;
-    // }
   } catch (e) {
     console.log(e);
   }
