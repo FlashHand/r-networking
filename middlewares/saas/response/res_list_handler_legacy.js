@@ -5,7 +5,7 @@
  */
 const fullfilled = (response) => {
   try {
-    let resBody = response.data.data||{};
+    let resBody = response.data.data;
     let resCode = parseInt(response.data.code);
     let resMsg = response.data.msg;
     if (resBody.list) {
