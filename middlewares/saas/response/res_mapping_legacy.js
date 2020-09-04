@@ -6,7 +6,10 @@
 const fullfilled = response => {
   try {
     //data不是对象时不处理
-    if (typeof  response.data.data != 'object') return response;
+    if (typeof  response.data.data != 'object') {
+      response.data.res = response.data.data;
+      return response
+    }
     let resBody = response.data.data;
     let resCode = response.data.code;
     let resMsg = response.data.msg;

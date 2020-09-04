@@ -6,20 +6,16 @@
 const fullfilled = (response) => {
   try {
     let resBody = response.data.data;
-    let resCode = parseInt(response.data.code);
-    let resMsg = response.data.msg;
-    if (resBody.list) {
-      response.data.res = resBody.list
-      response.data.data = resBody.list;
-      for (let key in resBody) {
-        if (key !== 'list') {
-          response.data[key] = resBody[key];
+    if (response.data.data === 'object'){
+      if (resBody.list) {
+        response.data.res = resBody.list
+        response.data.data = resBody.list;
+        for (let key in resBody) {
+          if (key !== 'list') {
+            response.data[key] = resBody[key];
+          }
         }
       }
-    }else{
-      response.data.res = resBody;
-      response.data.res.code = resCode;
-      response.data.res.msg = resMsg;
     }
   } catch (e) {
 
