@@ -1,8 +1,3 @@
-/**
- * @Description
- * @author Wang Bo (ralwayne@163.com)
- * @date 2020/8/7 11:46 AM
- */
 const BasicClient = require('../BasicClient');
 const MWSlotsManager = require('../MWSlotsManager');
 const res_handler = require('../../middlewares/saas/response/res_handler');
@@ -10,6 +5,19 @@ const mw_slots_manager = new MWSlotsManager();
 const mw_slots_manager_legacy = new MWSlotsManager();
 
 class SaasClient extends BasicClient {
+  /**
+   * @description 继承于{@link  BasicClient}
+   * 应该继承BasicClient去使用，如{@link  BasicClient}
+   * @classdesc 默认header是：{'Content-Type':'application/json'}
+   *
+   * baseURL默认使用的环境变量有VUE_APP_BASE_URL,VUE_APP_API_ROOT,API_ROOT,VUE_APP_BASE_URL
+   * @example create a instance
+   * const client = new BasicClient();
+   * @param {object} [config={isRaw:false}] http client 的配置
+   * @param {boolean} [config.isRaw=false] 是否直接返回AxiosResponse实例
+   * @param {object[]} [request_mws=[]]  请求中间件队列
+   * @param {object[]} [response_mws=[]]  返回中间件队列
+   */
   constructor(config = {}, request_mws = [], response_mws = []) {
     if (config.isLegacy) {
       request_mws.unshift(mw_slots_manager_legacy.req_pre);
@@ -28,6 +36,9 @@ class SaasClient extends BasicClient {
   }
 }
 
+/**
+ * @static SaasClient.mw_slots_manager
+ */
 SaasClient.mw_slots_manager = mw_slots_manager;
 SaasClient.mw_slots_manager_legacy = mw_slots_manager_legacy;
 

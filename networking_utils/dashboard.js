@@ -1,8 +1,3 @@
-/**
- * @Description
- * @author Wang Bo (ralwayne@163.com)
- * @date 2020/8/8 2:55 PM
- */
 const DashboardClient = require("../api_clients/DashboardClient");
 const res_mapping_legacy = require('../middlewares/common/response/res_mapping_legacy');
 const generateClients = (service = '', request_mws = [], response_mws = []) => {

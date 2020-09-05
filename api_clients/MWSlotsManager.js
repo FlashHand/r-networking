@@ -1,26 +1,23 @@
-/**
- * @Description 中间件插槽管理类
- * @author Wang Bo (ralwayne@163.com)
- * @date 2020/8/26 5:24 PM
- */
 class MWClass {
+
   constructor() {
     this.mws = [];
     this.fullfilled = (config) => {
       let finalConfig = config;
-      for (let mw of this.mws){
+      for (let mw of this.mws) {
         finalConfig = mw.fullfilled(config);
       }
       return finalConfig;
     };
     this.rejected = (error) => {
-      for (let mw of this.mws){
+      for (let mw of this.mws) {
         mw.rejected(error);
       }
       return Promise.reject(error);
     };
   }
-  set(injectedMWs){
+
+  set(injectedMWs) {
     this.mws = injectedMWs;
   }
 }

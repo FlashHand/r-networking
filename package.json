@@ -22,5 +22,9 @@
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "devDependencies": {
+    "docdash": "^1.2.0",
+    "taffydb": "^2.7.3"
   }
 }

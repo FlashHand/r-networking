@@ -1,8 +1,3 @@
-/**
- * @Description
- * @author Wang Bo (ralwayne@163.com)
- * @date 2020/8/7 11:46 AM
- */
 const BasicClient = require('../BasicClient');
 const MWSlotsManager = require('../MWSlotsManager');
 const mw_slots_manager = new MWSlotsManager();
