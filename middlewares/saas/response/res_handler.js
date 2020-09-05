@@ -17,6 +17,7 @@ const rejected = error => {
   return Promise.reject(error)
 }
 module.exports = {
+  name:'res_handler',
   fullfilled,
   rejected
 }

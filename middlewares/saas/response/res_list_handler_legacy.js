@@ -6,7 +6,7 @@
 const fullfilled = (response) => {
   try {
     let resBody = response.data.data;
-    if (response.data.data === 'object'){
+    if (typeof resBody === 'object'){
       if (resBody.list) {
         response.data.res = resBody.list
         response.data.data = resBody.list;
@@ -26,6 +26,7 @@ const rejected = (error) => {
   return Promise.reject(error);
 };
 module.exports =  {
+  name:'res_list_handler_legacy',
   fullfilled,
   rejected
 }
