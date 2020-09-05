@@ -7,7 +7,6 @@ module.exports = {
   account_v2:require('./service_account/service_account_v2'),
   agency_v2:require('./service_agency/service_agency_v2'),
   common: require('./service_common/service_common'),
-  crm_cus_v2: require('./service_crm-cus/service_crm-cus_v2'),
   crm_customer_v2: require('./service_crm-customer/service_crm-customer_v2'),
   crm_order_v2: require('./service_crm-order/service_crm-order_v2'),
   crm_pool_v2:require('./service_crm-pool/service_crm-pool_v2'),
