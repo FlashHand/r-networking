@@ -94,6 +94,18 @@ class BasicClient {
       })
     })
   }
+  createPostBlob(url, params = {}) {
+    return new Promise((resolve, reject) => {
+      this.httpClient.post(url, {
+        responseType: 'blob',
+        params,
+      }).then(res => {
+        resolve(resHandler(res, this.isRaw));
+      }).catch(e => {
+        reject(e)
+      })
+    })
+  }
 
   /**
    *
