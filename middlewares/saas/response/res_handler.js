@@ -14,7 +14,6 @@ const fullfilled = response => {
     if (service.isTokenInvalid(serviceCode)) {
       window_helper.goLogin()
     }
-
   } catch (e) {
     console.log(e);
   }
