@@ -41,8 +41,6 @@ class BasicClient {
       timeout,
       headers
     }
-
-    console.log('option',options)
     this.httpClient = axios.create(options);
     request_mws.forEach(mw => {
       this.httpClient.interceptors.request.use(mw.fullfilled, mw.rejected);
