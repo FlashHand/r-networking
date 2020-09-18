@@ -5,4 +5,4 @@
  * @date 2020/9/18 11:31 AM
  */
 const server = require("../../networking_utils/saas")
-module.exports = server.generateClients("/tax-console")
+module.exports = server.generateClients("/tax-console");
