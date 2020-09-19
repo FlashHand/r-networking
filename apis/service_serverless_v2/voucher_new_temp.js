@@ -6,5 +6,5 @@
  */
 const service_serverless_v2 = require('../../service_providers/service_serverless/service_serverless_v2');
 module.exports = (params = {_t: new Date().getTime()}) => {
-  return service_serverless_v2.client.createGet('/api/sap/voucherTempManage/newTemp', params)
+  return service_serverless_v2.client.createPostJSON('/api/sap/voucherTempManage/newTemp', params)
 }
