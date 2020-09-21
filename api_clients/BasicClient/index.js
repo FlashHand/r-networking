@@ -175,6 +175,15 @@ class BasicClient {
       })
     ])
   }
+  createPutJSON(url, params = {}) {
+    return new Promise((resolve, reject) => {
+      this.httpClient.put(url, params).then(res => {
+        resolve(resHandler(res,this.isRaw));
+      }).catch(e => {
+        reject(e);
+      });
+    })
+  }
 
   /**
    * @description  {headers: {'Content-Type': 'multipart/form-data'}}\
