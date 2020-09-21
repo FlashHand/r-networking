@@ -4,7 +4,7 @@
  */
 const axios = require('axios');
 const qs = require('qs');
-const resHandler = (res,isRaw=false)=>{
+const resHandler = (res, isRaw = false) => {
   return isRaw ? res : res.data;
 }
 
@@ -22,9 +22,9 @@ class BasicClient {
    * @param {object[]} [request_mws=[]]  请求中间件队列
    * @param {object[]} [response_mws=[]]  返回中间件队列
    */
-  constructor(config = {isRaw:false}, request_mws = [], response_mws = []) {
+  constructor(config = {isRaw: false}, request_mws = [], response_mws = []) {
     //为请求和返回中间件数组，增加中间件头尾插槽
-    let baseURL = process.env.VUE_APP_BASE_URL||process.env.VUE_APP_API_ROOT||process.env.API_ROOT||process.env.VUE_APP_BASE_URL;
+    let baseURL = process.env.VUE_APP_BASE_URL || process.env.VUE_APP_API_ROOT || process.env.API_ROOT || process.env.VUE_APP_BASE_URL;
     let timeout = 20000;
     this.isRaw = config.isRaw;
     if (typeof config.baseURL === 'string') {
@@ -35,7 +35,7 @@ class BasicClient {
     }
     this.httpClient = axios.create();
 
-    const headers = {'Content-Type':'application/json'};
+    const headers = {'Content-Type': 'application/json'};
     const options = {
       baseURL,
       timeout,
@@ -64,7 +64,7 @@ class BasicClient {
           return qs.stringify(params, {arrayFormat: 'indices'})
         }
       }).then(res => {
-        resolve(resHandler(res,this.isRaw));
+        resolve(resHandler(res, this.isRaw));
       }).catch(e => {
         reject(e);
       });
@@ -92,11 +92,11 @@ class BasicClient {
       })
     })
   }
+
   createPostBlob(url, params = {}) {
     return new Promise((resolve, reject) => {
-      this.httpClient.post(url, {
+      this.httpClient.post(url, params, {
         responseType: 'blob',
-        params,
       }).then(res => {
         resolve(resHandler(res, this.isRaw));
       }).catch(e => {
@@ -114,7 +114,7 @@ class BasicClient {
   createPostJSON(url, params = {}) {
     return new Promise((resolve, reject) => {
       this.httpClient.post(url, params).then(res => {
-        resolve(resHandler(res,this.isRaw));
+        resolve(resHandler(res, this.isRaw));
       }).catch(e => {
         reject(e);
       });
@@ -133,7 +133,7 @@ class BasicClient {
     return new Promise((resolve, reject) => {
       let headers = {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'}};
       this.httpClient.post(url, qs.stringify(params, type), headers).then(res => {
-        resolve(resHandler(res,this.isRaw));
+        resolve(resHandler(res, this.isRaw));
       }).catch(e => {
         reject(e);
       });
@@ -150,8 +150,8 @@ class BasicClient {
   createPut(url, params = {}, type = {}) {
     let headers = {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'}};
     return new Promise((resolve, reject) => [
-      this.httpClient.put(url, qs.stringify(params, type),headers).then(res => {
-        resolve(resHandler(res,this.isRaw));
+      this.httpClient.put(url, qs.stringify(params, type), headers).then(res => {
+        resolve(resHandler(res, this.isRaw));
       }).catch(e => {
         reject(e);
       })
@@ -168,17 +168,18 @@ class BasicClient {
   createPutBody(url, params = {}, type = {}) {
     let headers = {headers: {'Content-Type': 'application/json;charset=utf-8'}};
     return new Promise((resolve, reject) => [
-      this.httpClient.put(url, params , headers).then(res => {
-        resolve(resHandler(res,this.isRaw));
+      this.httpClient.put(url, params, headers).then(res => {
+        resolve(resHandler(res, this.isRaw));
       }).catch(e => {
         reject(e);
       })
     ])
   }
+
   createPutJSON(url, params = {}) {
     return new Promise((resolve, reject) => {
       this.httpClient.put(url, params).then(res => {
-        resolve(resHandler(res,this.isRaw));
+        resolve(resHandler(res, this.isRaw));
       }).catch(e => {
         reject(e);
       });
@@ -195,7 +196,7 @@ class BasicClient {
     let headers = {headers: {'Content-Type': 'multipart/form-data'}};
     return new Promise((resolve, reject) => {
       this.httpClient.post(url, formData, headers).then(res => {
-        resolve(resHandler(res,this.isRaw));
+        resolve(resHandler(res, this.isRaw));
       }).catch(e => {
         reject(e)
       })
@@ -213,8 +214,8 @@ class BasicClient {
   createPostForm(url, params = {}) {
     return new Promise((resolve, reject) => {
       let headers = {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'}};
-      this.httpClient.post(url, qs.stringify(params, {arrayFormat: 'indices', allowDots: true}),headers).then(res => {
-        resolve(resHandler(res,this.isRaw))
+      this.httpClient.post(url, qs.stringify(params, {arrayFormat: 'indices', allowDots: true}), headers).then(res => {
+        resolve(resHandler(res, this.isRaw))
 
       }).catch(e => {
         reject(e)
@@ -228,10 +229,10 @@ class BasicClient {
    * @param params
    * @returns {Promise<unknown>}
    */
-  createDelete(url, params = {}){
+  createDelete(url, params = {}) {
     return new Promise((resolve, reject) => {
       this.httpClient.delete(url, {params}).then(res => {
-        resolve(resHandler(res,this.isRaw))
+        resolve(resHandler(res, this.isRaw))
 
       }).catch(e => {
         reject(e)
