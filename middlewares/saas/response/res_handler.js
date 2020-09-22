@@ -12,7 +12,6 @@ const fullfilled = response => {
     //登录失效鉴权
     let serviceCode = response.data.serviceCode;
     app_helper.checkLogin(serviceCode);
-
   } catch (e) {
     console.log(e);
   }
