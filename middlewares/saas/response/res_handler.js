@@ -11,9 +11,8 @@ const fullfilled = response => {
     response.data.code = parseInt(response.data.code);
     //登录失效鉴权
     let serviceCode = response.data.serviceCode;
-    if (app_helper.isTokenInvalid(serviceCode)) {
-      app_helper.goLogin()
-    }
+    app_helper.checkLogin(serviceCode);
+
   } catch (e) {
     console.log(e);
   }
