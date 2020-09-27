@@ -54,7 +54,7 @@ class BasicClient {
    * @description createGet
    * @param url
    * @param params
-   * @returns {Promise<unknown>}
+   * @returns {Promise<Object>}
    */
   createGet(url, params = {}) {
     return new Promise((resolve, reject) => {
