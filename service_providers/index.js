@@ -28,5 +28,7 @@ module.exports = {
   serverless_v2: require('./service_serverless/service_serverless_v2'),
   serverless_package_v2: require('./service_serverless-package/service_serverless-package_v2'),
   tax_console: require('./service_tax-console/service_tax-console'),
-  tenant_console_v2: require('./service_tenant-console/service_tenant-console_v2')
+  tenant_console_v2: require('./service_tenant-console/service_tenant-console_v2'),
+  tenant_console: require('./service_tenant-console/service_tenant-console')
+
 }
