@@ -12,6 +12,7 @@ module.exports = {
   crm_order_v2: require('./service_crm-order/service_crm-order_v2'),
   crm_pool: require('./service_crm-pool/service_crm-pool'),
   finance_v2: require('./service_finance/service_finance_v2'),
+  ims: require('./service_ims/service_ims'),
   invoice_v2: require('./service_invoice/service_invoice_v2'),
   market: require('./service_market/service_market'),
   message_center_v2: require('./service_message-center/service_message-center_v2'),
@@ -31,5 +32,4 @@ module.exports = {
   tax_console: require('./service_tax-console/service_tax-console'),
   tenant_console_v2: require('./service_tenant-console/service_tenant-console_v2'),
   tenant_console: require('./service_tenant-console/service_tenant-console')
-
 }
