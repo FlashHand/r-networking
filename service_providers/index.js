@@ -22,7 +22,6 @@ module.exports = {
   product_v2: require('./service_product/service_product_v2'),
   product_center_v2: require('./service_product-center/service_product-center_v2'),
   product_center_v2_special: require('./service_product-center/service_product-center_v2_special.js'),
-  pub_partner_v2: require('./service_pub-partner/service_pub-partner_v2'),
   queqiao_platform: require('./service_queqiao-platform/service_queqiao-platform'),
   queqiao_v2: require('./service_queqiao/service_queqiao_v2'),
   report_v2: require('./service_report/service_report_v2'),
