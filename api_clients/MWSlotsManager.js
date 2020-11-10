@@ -1,5 +1,4 @@
 class MWClass {
-
   constructor() {
     this.mws = [];
     this.fullfilled = (config) => {
@@ -23,6 +22,9 @@ class MWClass {
 }
 
 class MWSlotsManager {
+  /**
+   * @classdesc 中间件插槽管理器
+   */
   constructor() {
     //请求前置插槽中间件
     this.req_pre = new MWClass();
