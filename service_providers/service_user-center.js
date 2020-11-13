@@ -188,5 +188,12 @@ module.exports = {
    *
    * 功能范围:
    */
-  tenant_console: require('./service_tenant-console/service_tenant-console')
+  tenant_console: require('./service_tenant-console/service_tenant-console'),
+  /**
+   * @static user-center
+   * @desc 微服务:/user-center
+   *
+   * 功能范围:
+   */
+  user_center:require('./service_user-center/service_user-center')
 }

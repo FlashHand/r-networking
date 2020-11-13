@@ -1,5 +1,5 @@
 const saas = require('./networking_utils/saas');
-const service_providers = require('./service_providers');
+const service_providers = require('./service_providers/service_user-center');
 const BasicClient = require('./api_clients/BasicClient');
 const SaasClient = require('./api_clients/SaasClient');
 /**
