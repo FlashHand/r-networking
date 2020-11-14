@@ -11,14 +11,19 @@ const resHandler = (res, isRaw = false) => {
 class BasicClient {
   /**
    * @description http client 基类,你不应该直接用BasicClient创建client实例，
-   * 应该继承BasicClient去使用，如{@link  BasicClient}
+   * 应该继承BasicClient去使用，如{@link  SaasClient}
    * @classdesc 默认header是：{'Content-Type':'application/json'}
    *
    * baseURL默认使用的环境变量有VUE_APP_BASE_URL,VUE_APP_API_ROOT,API_ROOT,VUE_APP_BASE_URL
-   * @example create a instance
+   *
+   * 开发前请查看{@link https://www.yuque.com/rongyisuan/iianmg/oesl8u|前端接口规范文档}
+   * @example
+   * create a instance
    * const client = new BasicClient();
-   * @param {object} [config={isRaw:false}] http client 的配置
+   * @param {object} [config={isRaw:false,service:""}] http client 的配置
    * @param {boolean} [config.isRaw=false] 是否直接返回AxiosResponse实例
+   * @param {string} [config.service=""] 默认服务名为空，可以指定服务名，会自动添加的client实例的baseURL中。
+   * 如：service:"our-v1";baseURL会变成http://api.domain.com/our-v1
    * @param {object[]} [request_mws=[]]  请求中间件队列
    * @param {object[]} [response_mws=[]]  返回中间件队列
    */
@@ -51,7 +56,7 @@ class BasicClient {
   }
 
   /**
-   * @description createGet
+   * @description 创建get请求api
    * @param url
    * @param params
    * @returns {Promise<Object>}
@@ -72,7 +77,7 @@ class BasicClient {
   }
 
   /**
-   *
+   * @description 创建get请求，获取二进制文件
    * @param url
    * @param params
    * @returns {Promise<unknown>}
@@ -93,6 +98,12 @@ class BasicClient {
     })
   }
 
+  /**
+   * @description 创建post请求，获取二进制文件
+   * @param url
+   * @param params
+   * @returns {Promise<unknown>}
+   */
   createPostBlob(url, params = {}) {
     return new Promise((resolve, reject) => {
       this.httpClient.post(url, params, {
@@ -106,7 +117,7 @@ class BasicClient {
   }
 
   /**
-   *
+   * @description 创建post请求，header是application/json
    * @param url
    * @param params
    * @returns {Promise<unknown>}
@@ -122,7 +133,8 @@ class BasicClient {
   }
 
   /**
-   * @description
+   * @deprecated 请改用{@link  BasicClient#createPostJSON}**此接口已经不符合规范，历史遗留，不要使用**
+   * @description 请改用{@link  BasicClient#createPostJSON}创建post请求，此接口废弃
    * header:{headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'}}
    * @param url
    * @param params
@@ -141,6 +153,8 @@ class BasicClient {
   }
 
   /**
+   * @deprecated **请改用createPostJSON,此api已经不符合规范，历史遗留，不要使用**
+   * @description 请改用{@link  BasicClient#createPostJSON}创建post请求，此接口废弃
    * {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'}};
    * @param url
    * @param params
@@ -159,7 +173,9 @@ class BasicClient {
   }
 
   /**
-   * @description {headers: {'Content-Type': 'application/json;charset=utf-8'}};
+   * @deprecated **请改用createPostJSON,此api已经不符合规范，历史遗留，不要使用**
+   * @description 请改用{@link  BasicClient#createPostJSON}创建post请求，此接口废弃
+   * {headers: {'Content-Type': 'application/json;charset=utf-8'}};
    * @param url
    * @param params
    * @param type
@@ -176,6 +192,13 @@ class BasicClient {
     ])
   }
 
+  /**
+   * @deprecated **请改用createPostJSON,此api已经不符合规范，历史遗留，不要使用**
+   * @description 请改用{@link  BasicClient#createPostJSON}创建post请求，此接口废弃
+   * @param url
+   * @param params
+   * @returns {Promise<unknown>}
+   */
   createPutJSON(url, params = {}) {
     return new Promise((resolve, reject) => {
       this.httpClient.put(url, params).then(res => {
@@ -187,7 +210,9 @@ class BasicClient {
   }
 
   /**
-   * @description  {headers: {'Content-Type': 'multipart/form-data'}}\
+   * @deprecated **请改用ali oss sdk,此api已经不符合规范，历史遗留，不要使用**
+   * @description  上传文件
+   * {headers: {'Content-Type': 'multipart/form-data'}}\
    * @param url
    * @param formData
    * @returns {Promise<unknown>}
@@ -204,7 +229,9 @@ class BasicClient {
   }
 
   /**
-   * @desc {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'}}
+   * @deprecated **请改用createPostJSON,此api已经不符合规范，历史遗留，不要使用**
+   * @description 请改用{@link  BasicClient#createPostJSON}创建post请求，此接口废弃
+   * {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'}}
    *
    * qs.stringify(params, {arrayFormat: 'indices', allowDots: true}
    * @param url
@@ -224,7 +251,8 @@ class BasicClient {
   }
 
   /**
-   *
+   * @deprecated **请改用createPostJSON,此api已经不符合规范，历史遗留，不要使用**
+   * @description 请改用{@link  BasicClient#createPostJSON}创建post请求，此接口废弃
    * @param url
    * @param params
    * @returns {Promise<unknown>}

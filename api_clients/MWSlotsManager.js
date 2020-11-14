@@ -1,5 +1,4 @@
 class MWClass {
-
   constructor() {
     this.mws = [];
     this.fullfilled = (config) => {
@@ -23,6 +22,15 @@ class MWClass {
 }
 
 class MWSlotsManager {
+  /**
+   * @classdesc 中间件插槽管理器
+   * @example
+   * const SaasClient = require('r-networking').SaasClient;
+   const auth = require('./networking/middlewares/request/auth');
+   const error_handler = require('./networking/middlewares/response/error_handler');
+   SaasClient.mw_slots_manager.req_pre.set([auth]);
+   SaasClient.mw_slots_manager.res_sub.set([error_handler]);
+   */
   constructor() {
     //请求前置插槽中间件
     this.req_pre = new MWClass();
