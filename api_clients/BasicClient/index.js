@@ -233,7 +233,6 @@ class BasicClient {
     return new Promise((resolve, reject) => {
       this.httpClient.delete(url, {params}).then(res => {
         resolve(resHandler(res, this.isRaw))
-
       }).catch(e => {
         reject(e)
       })
