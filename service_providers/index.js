@@ -195,5 +195,12 @@ module.exports = {
    *
    * 功能范围:新网关，用户权限中心
    */
-  user_center:require('./service_user-center/service_user-center')
+  user_center:require('./service_user-center/service_user-center'),
+  /**
+   * @static user-center_wild
+   * @desc 微服务:/user-center_wild
+   *
+   * 功能范围:新网关，用户权限中心
+   */
+  user_center_wild:require('./service_user-center/service_user-center_wild')
 }
