@@ -59,16 +59,18 @@ class BasicClient {
    * @description 创建get请求api
    * @param url
    * @param params
+   * @param option 自定义头部
    * @returns {Promise<Object>}
    */
-  createGet(url, params = {}) {
+  createGet(url, params = {}, option = {}) {
+    let headers = option.headers || {};
     return new Promise((resolve, reject) => {
       this.httpClient.get(url, {
         params,
         paramsSerializer: params => {
           return qs.stringify(params, {arrayFormat: 'indices'})
         }
-      }).then(res => {
+      }, headers).then(res => {
         resolve(resHandler(res, this.isRaw));
       }).catch(e => {
         reject(e);
