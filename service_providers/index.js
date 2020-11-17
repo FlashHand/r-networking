@@ -190,17 +190,17 @@ module.exports = {
    */
   tenant_console: require('./service_tenant-console/service_tenant-console'),
   /**
+   * @static service_user-auth
+   * @desc 微服务:/service_user-auth
+   *
+   * 功能范围:oauth鉴权api
+   */
+  user_auth:require('./service_user-auth/service_user-auth'),
+  /**
    * @static user-center
    * @desc 微服务:/user-center
    *
    * 功能范围:新网关，用户权限中心
    */
   user_center:require('./service_user-center/service_user-center'),
-  /**
-   * @static user-center_wild
-   * @desc 微服务:/user-center_wild
-   *
-   * 功能范围:新网关，用户权限中心
-   */
-  user_center_wild:require('./service_user-center/service_user-center_wild')
 }
