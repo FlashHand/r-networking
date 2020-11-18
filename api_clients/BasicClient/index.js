@@ -10,6 +10,7 @@ const resHandler = (res, isRaw = false) => {
 
 class BasicClient {
   /**
+   * @todo 增加双请求机制用于实现鉴权流程
    * @description http client 基类,你不应该直接用BasicClient创建client实例，
    * 应该继承BasicClient去使用，如{@link  SaasClient}
    * @classdesc 默认header是：{'Content-Type':'application/json'}
@@ -62,21 +63,48 @@ class BasicClient {
    * @param option 自定义头部
    * @returns {Promise<Object>}
    */
-  createGet(url, params = {}, option = {}) {
+  async createGet(url, params = {}, option = {}) {
     let headers = option.headers || {};
-    return new Promise((resolve, reject) => {
-      this.httpClient.get(url, {
+    let config;
+    try {
+      config = {
         params,
         paramsSerializer: params => {
           return qs.stringify(params, {arrayFormat: 'indices'})
+        },
+        headers
+      };
+      let res = await this.httpClient.get(url, config);
+      return resHandler(res, this.isRaw);
+    } catch (e) {
+      if (e.isAccessInvalid) {
+        //第一次请求鉴权失败
+        try {
+          let res = await this.httpClient.get(url, config);
+          return (resHandler(res, this.isRaw));
+        } catch (e) {
+          return Promise.reject(e);
         }
-      }, headers).then(res => {
-        resolve(resHandler(res, this.isRaw));
-      }).catch(e => {
-        reject(e);
-      });
-    });
+      }
+      return Promise.reject(e);
+    }
   }
+
+  // createGet(url, params = {}, option = {}) {
+  //   let headers = option.headers || {};
+  //   return new Promise((resolve, reject) => {
+  //     this.httpClient.get(url, {
+  //       params,
+  //       paramsSerializer: params => {
+  //         return qs.stringify(params, {arrayFormat: 'indices'})
+  //       }
+  //     }, headers).then(res => {
+  //       resolve(resHandler(res, this.isRaw));
+  //     }).catch(e => {
+  //       reject(e);
+  //     });
+  //   });
+  // }
 
   /**
    * @description 创建get请求，获取二进制文件
@@ -124,14 +152,30 @@ class BasicClient {
    * @param params
    * @returns {Promise<unknown>}
    */
-  createPostJSON(url, params = {}) {
-    return new Promise((resolve, reject) => {
-      this.httpClient.post(url, params).then(res => {
-        resolve(resHandler(res, this.isRaw));
-      }).catch(e => {
-        reject(e);
-      });
-    })
+  // createPostJSON(url, params = {}) {
+  //   return new Promise((resolve, reject) => {
+  //     this.httpClient.post(url, params).then(res => {
+  //       resolve(resHandler(res, this.isRaw));
+  //     }).catch(e => {
+  //       reject(e);
+  //     });
+  //   })
+  // }
+  async createPostJSON(url, params = {}) {
+    try {
+      let res = await this.httpClient.post(url, params);
+      return (resHandler(res, this.isRaw));
+    } catch (e) {
+      if (e.isAccessInvalid) {
+        try {
+          let res = await this.httpClient.post(url, params);
+          return (resHandler(res, this.isRaw));
+        } catch (e) {
+          return Promise.reject(e);
+        }
+      }
+      return Promise.reject(e);
+    }
   }
 
   /**
