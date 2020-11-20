@@ -79,6 +79,7 @@ class BasicClient {
     } catch (e) {
       if (e.isAccessInvalid) {
         //第一次请求鉴权失败
+        console.log('r-networking createGet 第一次请求鉴权失败')
         try {
           let res = await this.httpClient.get(url, config);
           return (resHandler(res, this.isRaw));

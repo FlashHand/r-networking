@@ -8,7 +8,7 @@ const fullfilled = response => {
     if (response.data.code == 0) {
       return response;
     } else {
-      return Promise.reject(response.data.msg);
+      return Promise.reject(new Error(response.data.msg));
     }
   } catch (e) {
     return Promise.reject(e);
