@@ -2,6 +2,10 @@ const saas = require('./networking_utils/saas');
 const service_providers = require('./service_providers');
 const BasicClient = require('./api_clients/BasicClient');
 const SaasClient = require('./api_clients/SaasClient');
+const RysClient = require('./api_clients/RysClient');
+const client = RysClient.createClient();
+const rawClient = RysClient.createRawClient({isRaw: true});
+
 /**
  * @module r-networking
  * @desc **common**不推荐使用！是一个没有注入微服务根路由的provider，可以用来对接任何接口，但由于common对接的多种微服务时中间件作用域无法根据微服务区分。
@@ -30,5 +34,7 @@ module.exports = {
    * @static service_providers
    * @desc {@link module:service_providers}
    */
-  service_providers
+  service_providers,
+  client,
+  rawClient
 }
