@@ -19,6 +19,9 @@ class MWClass {
   set(injectedMWs) {
     this.mws = injectedMWs;
   }
+  concat(middlewares){
+    this.mws.push(...middlewares);
+  }
 }
 
 class MWSlotsManager {

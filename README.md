@@ -18,7 +18,7 @@ src/rys-api
 ```
 
 **创建API步骤：**
-- 创建src/r-api文件，然后创建一个r-api/our_v2.js
+- 创建src/rys-api文件，然后创建一个rys-api/our_v2.js
 - 在our_v2.js中添加
 ```javascript
 const rClient = require('r-networking').client;
@@ -35,7 +35,7 @@ module.exports = {
   createNewCompany
 }
 ```
-- 把our_v2添加到r-api/index.js中
+- 把our_v2添加到rys-api/index.js中
 ```javascript
 const our_v2 = require('./our_v2');
 module.exports = {
@@ -47,7 +47,7 @@ module.exports = {
 const rApi = require('path to r-api');
 //执行请求
 const requestPubAreaVersion = async ()=>{
-  let res = await rApi.our_v2.pub_area_version();
+  let res = await rApi.our_v2.pubAreaVersion();
   return res;
 }
 ```

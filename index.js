@@ -31,6 +31,11 @@ module.exports = {
    */
   SaasClient,
   /**
+   * @static RysClient
+   * @see RysClient
+   */
+  RysClient,
+  /**
    * @static service_providers
    * @desc {@link module:service_providers}
    */

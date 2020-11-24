@@ -1,5 +1,6 @@
 const BasicClient = require('../BasicClient');
 const MWSlotsManager = require('../MWSlotsManager');
+const res_handler = require('./res_handler');
 const mw_slots_manager = new MWSlotsManager();
 
 class RysClient extends BasicClient {
@@ -23,6 +24,8 @@ class RysClient extends BasicClient {
     request_mws.push(mw_slots_manager.req_sub);
     response_mws.unshift(mw_slots_manager.res_pre);
     response_mws.push(mw_slots_manager.res_sub);
+    response_mws.unshift(res_handler);
+
     super(config, request_mws, response_mws)
   }
 }
