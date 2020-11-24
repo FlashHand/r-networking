@@ -195,7 +195,8 @@ module.exports = {
    *
    * 功能范围:oauth鉴权api
    */
-  user_auth:require('./service_user-auth/service_user-auth'),
+  user_auth: require('./service_user-auth/service_user-auth'),
+  user_auth_wild:require('./service_user-auth_wild/service_user-auth_wild'),
   /**
    * @static user-center
    * @desc 微服务:/user-center

@@ -15,7 +15,7 @@ class SaasClient extends BasicClient {
    * @example create a instance
    * const saas = require('../../networking_utils/saas');
    * module.exports = saas.generateClients('/report/v2');
-   * @param {object} [config={isRaw:false}] http client 的配置
+   * @param {{service: string}} [config={isRaw:false}] http client 的配置
    * @param {boolean} [config.isRaw=false] 是否直接返回AxiosResponse实例
    * @param {object[]} [request_mws=[]]  请求中间件队列
    * @param {object[]} [response_mws=[]]  返回中间件队列
