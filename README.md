@@ -67,3 +67,5 @@ const pubAreaVersion = ()=>{
 ## r-networking进阶使用
 #### A. 中间件插槽
 #### B. 创建一个service_provider
+
+## r-networking的设计与维护
