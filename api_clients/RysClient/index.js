@@ -25,7 +25,6 @@ class RysClient extends BasicClient {
     response_mws.unshift(mw_slots_manager.res_pre);
     response_mws.push(mw_slots_manager.res_sub);
     response_mws.unshift(res_handler);
-
     super(config, request_mws, response_mws)
   }
 }
