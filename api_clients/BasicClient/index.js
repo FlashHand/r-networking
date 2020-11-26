@@ -262,12 +262,13 @@ class BasicClient {
    * {headers: {'Content-Type': 'multipart/form-data'}}\
    * @param url
    * @param formData
+   * @param options
    * @returns {Promise<unknown>}
    */
-  createPostFile(url, formData) {
-    let headers = {headers: {'Content-Type': 'multipart/form-data'}};
+  createPostFile(url, formData, options = {timeout: 60000}) {
+    let config = {headers: {'Content-Type': 'multipart/form-data'}, timeout: options.timeout || 60000};
     return new Promise((resolve, reject) => {
-      this.httpClient.post(url, formData, headers).then(res => {
+      this.httpClient.post(url, formData, config).then(res => {
         resolve(resHandler(res, this.isRaw));
       }).catch(e => {
         reject(e)
