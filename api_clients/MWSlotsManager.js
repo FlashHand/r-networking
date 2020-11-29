@@ -1,10 +1,14 @@
 class MWClass {
+  mws = [];
   constructor() {
-    this.mws = [];
-    this.fullfilled = (config) => {
+    this.fullfilled = async (config) => {
       let finalConfig = config;
       for (let mw of this.mws) {
-        finalConfig = mw.fullfilled(config);
+        if (mw.async){
+          finalConfig = await mw.fullfilled(config);
+        }else{
+          finalConfig = mw.fullfilled(config);
+        }
       }
       return finalConfig;
     };
@@ -12,7 +16,7 @@ class MWClass {
       for (let mw of this.mws) {
         mw.rejected(error);
       }
-      return Promise.reject(error);
+      // return Promise.reject(error);
     };
   }
 
@@ -21,6 +25,7 @@ class MWClass {
   }
   concat(middlewares){
     this.mws.push(...middlewares);
+    console.log(this.mws);
   }
 }
 
