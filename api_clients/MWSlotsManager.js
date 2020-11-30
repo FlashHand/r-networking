@@ -13,10 +13,10 @@ class MWClass {
       return finalConfig;
     };
     this.rejected = (error) => {
-      for (let mw of this.mws) {
-        mw.rejected(error);
-      }
-      // return Promise.reject(error);
+      // for (let mw of this.mws) {
+      //   mw.rejected(error);
+      // }
+      return Promise.reject(error);
     };
   }
 
@@ -25,7 +25,6 @@ class MWClass {
   }
   concat(middlewares){
     this.mws.push(...middlewares);
-    console.log(this.mws);
   }
 }
 
