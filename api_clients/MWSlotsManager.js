@@ -17,9 +17,6 @@ class MWClass {
       }
     };
     this.rejected = (error) => {
-      // for (let mw of this.mws) {
-      //   mw.rejected(error);
-      // }
       return Promise.reject(error);
     };
   }
