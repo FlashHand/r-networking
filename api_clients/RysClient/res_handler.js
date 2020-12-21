@@ -14,6 +14,10 @@ const fullfilled = response => {
   return response
 }
 const rejected = error => {
+  console.log(error.message);
+  if (error.message.indexOf('timeout')>=0&&error.message.indexOf('exceeded')>=0){
+    return {data:{code:'-1', msg: '超时'}}
+  }
   return Promise.reject(error)
 }
 module.exports = {
