@@ -18,7 +18,7 @@ const rejected = error => {
   //   // return {data: {code: '-12800', msg: '请求超时', config: error.config}}
   //   return error;
   // }
-  return error;
+  return {data: {code: '-12800', msg: error.message, config: error.config}};
 
   // return Promise.reject(error)
 }
