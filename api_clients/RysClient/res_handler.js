@@ -14,8 +14,9 @@ const fullfilled = response => {
   return response
 }
 const rejected = error => {
-  if (error.message.indexOf('timeout')>=0&&error.message.indexOf('exceeded')>=0){
-    return {data:{code:'-12800', msg: '请求超时',config:error.config}}
+  if (error.message.indexOf('timeout') >= 0 && error.message.indexOf('exceeded') >= 0) {
+    // return {data: {code: '-12800', msg: '请求超时', config: error.config}}
+    return error;
   }
   return Promise.reject(error)
 }
