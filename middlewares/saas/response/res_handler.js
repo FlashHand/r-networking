@@ -18,8 +18,17 @@ const fullfilled = response => {
   return response
 }
 const rejected = error => {
-  return {data: {code: '-12800',error_code:error.code, msg: error.message, config: error.config}};
-}
+  return {
+    data:
+      {
+        code: '-12800',
+        error_code: error.code,
+        msg: error.message,
+        config: error.config
+      },
+    config:error.config,
+    status:200
+  };}
 module.exports = {
   name: 'res_handler',
   fullfilled,
