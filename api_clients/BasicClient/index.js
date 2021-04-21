@@ -162,14 +162,15 @@ class BasicClient {
   //     });
   //   })
   // }
-  async createPostJSON(url, params = {}) {
+  async createPostJSON(url, params = {},options = {timeout: 20000}) {
+    let config = {headers: {'Content-Type': 'application/json'}, timeout: options.timeout || 20000};
     try {
-      let res = await this.httpClient.post(url, params);
+      let res = await this.httpClient.post(url, params,config);
       return (resHandler(res, this.isRaw));
     } catch (e) {
       if (e.isAccessInvalid) {
         try {
-          let res = await this.httpClient.post(url, params);
+          let res = await this.httpClient.post(url, params,config);
           return (resHandler(res, this.isRaw));
         } catch (e) {
           return Promise.reject(e);
