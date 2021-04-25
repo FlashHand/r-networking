@@ -1,5 +1,5 @@
 const saas = require('../../networking_utils/saas');
-module.exports = saas.generateClients('/ims',[],[]);
+module.exports = saas.generateClients('/ims-old',[],[]);
 
 
 
