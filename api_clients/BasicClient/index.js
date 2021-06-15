@@ -77,7 +77,7 @@ class BasicClient {
       let res = await this.httpClient.get(url, config);
       return resHandler(res, this.isRaw);
     } catch (e) {
-      if (e.isAccessInvalid) {
+      if (e.isAccessInvalid || e.isLdapNeeded) {
         //第一次请求鉴权失败
         console.log('r-networking createGet 第一次请求鉴权失败')
         try {
@@ -162,15 +162,17 @@ class BasicClient {
   //     });
   //   })
   // }
-  async createPostJSON(url, params = {},options = {timeout: 20000}) {
+  async createPostJSON(url, params = {}, options = {timeout: 20000}) {
     let config = {headers: {'Content-Type': 'application/json'}, timeout: options.timeout || 20000};
     try {
-      let res = await this.httpClient.post(url, params,config);
+      let res = await this.httpClient.post(url, params, config);
       return (resHandler(res, this.isRaw));
     } catch (e) {
-      if (e.isAccessInvalid) {
+      console.log('isLdapNeeded',e);
+
+      if (e.isAccessInvalid || e.isLdapNeeded) {
         try {
-          let res = await this.httpClient.post(url, params,config);
+          let res = await this.httpClient.post(url, params, config);
           return (resHandler(res, this.isRaw));
         } catch (e) {
           return Promise.reject(e);
