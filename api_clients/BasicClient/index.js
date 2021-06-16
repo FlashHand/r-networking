@@ -91,21 +91,6 @@ class BasicClient {
     }
   }
 
-  // createGet(url, params = {}, option = {}) {
-  //   let headers = option.headers || {};
-  //   return new Promise((resolve, reject) => {
-  //     this.httpClient.get(url, {
-  //       params,
-  //       paramsSerializer: params => {
-  //         return qs.stringify(params, {arrayFormat: 'indices'})
-  //       }
-  //     }, headers).then(res => {
-  //       resolve(resHandler(res, this.isRaw));
-  //     }).catch(e => {
-  //       reject(e);
-  //     });
-  //   });
-  // }
 
   /**
    * @description 创建get请求，获取二进制文件
@@ -153,23 +138,12 @@ class BasicClient {
    * @param params
    * @returns {Promise<unknown>}
    */
-  // createPostJSON(url, params = {}) {
-  //   return new Promise((resolve, reject) => {
-  //     this.httpClient.post(url, params).then(res => {
-  //       resolve(resHandler(res, this.isRaw));
-  //     }).catch(e => {
-  //       reject(e);
-  //     });
-  //   })
-  // }
   async createPostJSON(url, params = {}, options = {timeout: 20000}) {
     let config = {headers: {'Content-Type': 'application/json'}, timeout: options.timeout || 20000};
     try {
       let res = await this.httpClient.post(url, params, config);
       return (resHandler(res, this.isRaw));
     } catch (e) {
-      console.log('isLdapNeeded',e);
-
       if (e.isAccessInvalid || e.isLdapNeeded) {
         try {
           let res = await this.httpClient.post(url, params, config);

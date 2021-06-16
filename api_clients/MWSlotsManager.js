@@ -13,7 +13,6 @@ class MWClass {
         }
         return finalConfig;
       }catch (e){
-        console.log()
         return Promise.reject(e);
       }
     };
