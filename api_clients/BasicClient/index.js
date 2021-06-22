@@ -223,14 +223,22 @@ class BasicClient {
    * @param params
    * @returns {Promise<unknown>}
    */
-  createPutJSON(url, params = {}) {
-    return new Promise((resolve, reject) => {
-      this.httpClient.put(url, params).then(res => {
-        resolve(resHandler(res, this.isRaw));
-      }).catch(e => {
-        reject(e);
-      });
-    })
+  async createPutJSON(url, params = {}, options = {timeout: 20000}) {
+    let config = {timeout: options.timeout || 20000};
+    try {
+      let res = await this.httpClient.put(url, params, config);
+      return resHandler(res, this.isRaw);
+    } catch (e) {
+      if (e.isAccessInvalid || e.isLdapNeeded) {
+        try {
+          let res = await this.httpClient.put(url, params, config);
+          return (resHandler(res, this.isRaw));
+        } catch (e) {
+          return Promise.reject(e);
+        }
+      }
+      return Promise.reject(e);
+    }
   }
 
   /**
