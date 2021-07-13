@@ -3,10 +3,18 @@
  * @ignore
  */
 const axios = require('axios');
+// 适配 小程序
+if (process.env.VUE_APP_LOCAL_PLATFORM === 'xcx') {
+  import('axios-miniprogram-adapter').then(adapter => {
+    console.log('VUE_APP_LOCAL_PLATFORM:', process.env.VUE_APP_LOCAL_PLATFORM);
+    axios.defaults.adapter = adapter.default;
+  });
+}
+
 const qs = require('qs');
 const resHandler = (res, isRaw = false) => {
   return isRaw ? res : res.data;
-}
+};
 
 class BasicClient {
   /**
@@ -28,9 +36,13 @@ class BasicClient {
    * @param {object[]} [request_mws=[]]  请求中间件队列
    * @param {object[]} [response_mws=[]]  返回中间件队列
    */
-  constructor(config = {isRaw: false}, request_mws = [], response_mws = []) {
+  constructor(config = { isRaw: false }, request_mws = [], response_mws = []) {
     //为请求和返回中间件数组，增加中间件头尾插槽
-    let baseURL = process.env.VUE_APP_BASE_URL || process.env.VUE_APP_API_ROOT || process.env.API_ROOT || process.env.VUE_APP_BASE_URL;
+    let baseURL =
+      process.env.VUE_APP_BASE_URL ||
+      process.env.VUE_APP_API_ROOT ||
+      process.env.API_ROOT ||
+      process.env.VUE_APP_BASE_URL;
     let timeout = 20000;
     this.isRaw = config.isRaw;
     if (typeof config.baseURL === 'string') {
@@ -41,12 +53,12 @@ class BasicClient {
     }
     this.httpClient = axios.create();
 
-    const headers = {'Content-Type': 'application/json'};
+    const headers = { 'Content-Type': 'application/json' };
     const options = {
       baseURL,
       timeout,
       headers
-    }
+    };
     this.httpClient = axios.create(options);
     request_mws.forEach(mw => {
       this.httpClient.interceptors.request.use(mw.fullfilled, mw.rejected);
@@ -70,7 +82,7 @@ class BasicClient {
       config = {
         params,
         paramsSerializer: params => {
-          return qs.stringify(params, {arrayFormat: 'indices'})
+          return qs.stringify(params, { arrayFormat: 'indices' });
         },
         headers
       };
@@ -79,10 +91,10 @@ class BasicClient {
     } catch (e) {
       if (e.isAccessInvalid || e.isLdapNeeded) {
         //第一次请求鉴权失败
-        console.log('r-networking createGet 第一次请求鉴权失败')
+        console.log('r-networking createGet 第一次请求鉴权失败');
         try {
           let res = await this.httpClient.get(url, config);
-          return (resHandler(res, this.isRaw));
+          return resHandler(res, this.isRaw);
         } catch (e) {
           return Promise.reject(e);
         }
@@ -90,7 +102,6 @@ class BasicClient {
       return Promise.reject(e);
     }
   }
-
 
   /**
    * @description 创建get请求，获取二进制文件
@@ -100,18 +111,21 @@ class BasicClient {
    */
   createGetBlob(url, params = {}) {
     return new Promise((resolve, reject) => {
-      this.httpClient.get(url, {
-        responseType: 'blob',
-        params,
-        paramsSerializer: params => {
-          return qs.stringify(params, {arrayFormat: 'indices'})
-        }
-      }).then(res => {
-        resolve(resHandler(res, this.isRaw));
-      }).catch(e => {
-        reject(e)
-      })
-    })
+      this.httpClient
+        .get(url, {
+          responseType: 'blob',
+          params,
+          paramsSerializer: params => {
+            return qs.stringify(params, { arrayFormat: 'indices' });
+          }
+        })
+        .then(res => {
+          resolve(resHandler(res, this.isRaw));
+        })
+        .catch(e => {
+          reject(e);
+        });
+    });
   }
 
   /**
@@ -122,14 +136,17 @@ class BasicClient {
    */
   createPostBlob(url, params = {}) {
     return new Promise((resolve, reject) => {
-      this.httpClient.post(url, params, {
-        responseType: 'blob',
-      }).then(res => {
-        resolve(resHandler(res, this.isRaw));
-      }).catch(e => {
-        reject(e)
-      })
-    })
+      this.httpClient
+        .post(url, params, {
+          responseType: 'blob'
+        })
+        .then(res => {
+          resolve(resHandler(res, this.isRaw));
+        })
+        .catch(e => {
+          reject(e);
+        });
+    });
   }
 
   /**
@@ -138,16 +155,19 @@ class BasicClient {
    * @param params
    * @returns {Promise<unknown>}
    */
-  async createPostJSON(url, params = {}, options = {timeout: 20000}) {
-    let config = {headers: {'Content-Type': 'application/json'}, timeout: options.timeout || 20000};
+  async createPostJSON(url, params = {}, options = { timeout: 20000 }) {
+    let config = {
+      headers: { 'Content-Type': 'application/json' },
+      timeout: options.timeout || 20000
+    };
     try {
       let res = await this.httpClient.post(url, params, config);
-      return (resHandler(res, this.isRaw));
+      return resHandler(res, this.isRaw);
     } catch (e) {
       if (e.isAccessInvalid || e.isLdapNeeded) {
         try {
           let res = await this.httpClient.post(url, params, config);
-          return (resHandler(res, this.isRaw));
+          return resHandler(res, this.isRaw);
         } catch (e) {
           return Promise.reject(e);
         }
@@ -167,13 +187,20 @@ class BasicClient {
    */
   createPost(url, params = {}, type = {}) {
     return new Promise((resolve, reject) => {
-      let headers = {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'}};
-      this.httpClient.post(url, qs.stringify(params, type), headers).then(res => {
-        resolve(resHandler(res, this.isRaw));
-      }).catch(e => {
-        reject(e);
-      });
-    })
+      let headers = {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+        }
+      };
+      this.httpClient
+        .post(url, qs.stringify(params, type), headers)
+        .then(res => {
+          resolve(resHandler(res, this.isRaw));
+        })
+        .catch(e => {
+          reject(e);
+        });
+    });
   }
 
   /**
@@ -186,14 +213,21 @@ class BasicClient {
    * @returns {Promise<unknown>}
    */
   createPut(url, params = {}, type = {}) {
-    let headers = {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'}};
+    let headers = {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+      }
+    };
     return new Promise((resolve, reject) => [
-      this.httpClient.put(url, qs.stringify(params, type), headers).then(res => {
-        resolve(resHandler(res, this.isRaw));
-      }).catch(e => {
-        reject(e);
-      })
-    ])
+      this.httpClient
+        .put(url, qs.stringify(params, type), headers)
+        .then(res => {
+          resolve(resHandler(res, this.isRaw));
+        })
+        .catch(e => {
+          reject(e);
+        })
+    ]);
   }
 
   /**
@@ -206,14 +240,19 @@ class BasicClient {
    * @returns {Promise<unknown>}
    */
   createPutBody(url, params = {}, type = {}) {
-    let headers = {headers: {'Content-Type': 'application/json;charset=utf-8'}};
+    let headers = {
+      headers: { 'Content-Type': 'application/json;charset=utf-8' }
+    };
     return new Promise((resolve, reject) => [
-      this.httpClient.put(url, params, headers).then(res => {
-        resolve(resHandler(res, this.isRaw));
-      }).catch(e => {
-        reject(e);
-      })
-    ])
+      this.httpClient
+        .put(url, params, headers)
+        .then(res => {
+          resolve(resHandler(res, this.isRaw));
+        })
+        .catch(e => {
+          reject(e);
+        })
+    ]);
   }
 
   /**
@@ -223,8 +262,8 @@ class BasicClient {
    * @param params
    * @returns {Promise<unknown>}
    */
-  async createPutJSON(url, params = {}, options = {timeout: 20000}) {
-    let config = {timeout: options.timeout || 20000};
+  async createPutJSON(url, params = {}, options = { timeout: 20000 }) {
+    let config = { timeout: options.timeout || 20000 };
     try {
       let res = await this.httpClient.put(url, params, config);
       return resHandler(res, this.isRaw);
@@ -232,7 +271,7 @@ class BasicClient {
       if (e.isAccessInvalid || e.isLdapNeeded) {
         try {
           let res = await this.httpClient.put(url, params, config);
-          return (resHandler(res, this.isRaw));
+          return resHandler(res, this.isRaw);
         } catch (e) {
           return Promise.reject(e);
         }
@@ -250,15 +289,21 @@ class BasicClient {
    * @param options
    * @returns {Promise<unknown>}
    */
-  createPostFile(url, formData, options = {timeout: 60000}) {
-    let config = {headers: {'Content-Type': 'multipart/form-data'}, timeout: options.timeout || 60000};
+  createPostFile(url, formData, options = { timeout: 60000 }) {
+    let config = {
+      headers: { 'Content-Type': 'multipart/form-data' },
+      timeout: options.timeout || 60000
+    };
     return new Promise((resolve, reject) => {
-      this.httpClient.post(url, formData, config).then(res => {
-        resolve(resHandler(res, this.isRaw));
-      }).catch(e => {
-        reject(e)
-      })
-    })
+      this.httpClient
+        .post(url, formData, config)
+        .then(res => {
+          resolve(resHandler(res, this.isRaw));
+        })
+        .catch(e => {
+          reject(e);
+        });
+    });
   }
 
   /**
@@ -273,14 +318,24 @@ class BasicClient {
    */
   createPostForm(url, params = {}) {
     return new Promise((resolve, reject) => {
-      let headers = {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'}};
-      this.httpClient.post(url, qs.stringify(params, {arrayFormat: 'indices', allowDots: true}), headers).then(res => {
-        resolve(resHandler(res, this.isRaw))
-
-      }).catch(e => {
-        reject(e)
-      })
-    })
+      let headers = {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+        }
+      };
+      this.httpClient
+        .post(
+          url,
+          qs.stringify(params, { arrayFormat: 'indices', allowDots: true }),
+          headers
+        )
+        .then(res => {
+          resolve(resHandler(res, this.isRaw));
+        })
+        .catch(e => {
+          reject(e);
+        });
+    });
   }
 
   /**
@@ -292,12 +347,15 @@ class BasicClient {
    */
   createDelete(url, params = {}) {
     return new Promise((resolve, reject) => {
-      this.httpClient.delete(url, {params}).then(res => {
-        resolve(resHandler(res, this.isRaw))
-      }).catch(e => {
-        reject(e)
-      })
-    })
+      this.httpClient
+        .delete(url, { params })
+        .then(res => {
+          resolve(resHandler(res, this.isRaw));
+        })
+        .catch(e => {
+          reject(e);
+        });
+    });
   }
 }
 
