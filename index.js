@@ -5,6 +5,7 @@ const SaasClient = require('./api_clients/SaasClient');
 const RysClient = require('./api_clients/RysClient');
 const client = RysClient.createClient();
 const rawClient = RysClient.createRawClient({ isRaw: true });
+const axios = require('axios');
 
 /**
  * @module r-networking
