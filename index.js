@@ -4,7 +4,7 @@ const BasicClient = require('./api_clients/BasicClient');
 const SaasClient = require('./api_clients/SaasClient');
 const RysClient = require('./api_clients/RysClient');
 const client = RysClient.createClient();
-const rawClient = RysClient.createRawClient({isRaw: true});
+const rawClient = RysClient.createRawClient({ isRaw: true });
 
 /**
  * @module r-networking
@@ -17,7 +17,7 @@ module.exports = {
    * @static utils
    * @desc networking_utils用于生成http client暂无外部调用需求
    */
-  utils:{
+  utils: {
     saas
   },
   /**
@@ -41,5 +41,8 @@ module.exports = {
    */
   service_providers,
   client,
-  rawClient
+  rawClient,
+  setAdapter(adapter) {// 适配 小程序axios-miniprogram-adapter
+    axios.defaults.adapter = adapter.default;
+  }
 }

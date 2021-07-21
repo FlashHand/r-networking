@@ -3,14 +3,6 @@
  * @ignore
  */
 const axios = require('axios');
-// 适配 小程序
-if (process.env.VUE_APP_LOCAL_PLATFORM === 'xcx') {
-  import('axios-miniprogram-adapter').then(adapter => {
-    console.log('VUE_APP_LOCAL_PLATFORM:', process.env.VUE_APP_LOCAL_PLATFORM);
-    axios.defaults.adapter = adapter.default;
-  });
-}
-
 const qs = require('qs');
 const resHandler = (res, isRaw = false) => {
   return isRaw ? res : res.data;
