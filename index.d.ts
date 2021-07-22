@@ -58,10 +58,9 @@ declare module 'r-networking' {
 
 	}
 	export class BasicClient {
-		constructor(config: ClientConfig, request_mws: [any], response_mws: [any]);
-		createPostJSON(url: string, params:any, options?:ApiOptions): Promise<any>;
-		createGet(url: string, params:any, options?:ApiOptions): Promise<any>;
-
+		constructor(config: ClientConfig, request_mws: [any?], response_mws: [any?]);
+		createPostJSON(url: string, params?:any, options?:ApiOptions): Promise<any>;
+		createGet(url: string, params?:any, options?:ApiOptions): Promise<any>;
 	}
 
 }
