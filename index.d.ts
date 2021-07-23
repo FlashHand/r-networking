@@ -14,7 +14,17 @@ interface ClientConfig {
 }
 
 interface ApiOptions {
+	/**
+	 * 为具体的api设置超时时间
+	 */
 	timeout?: number
+}
+
+interface ResType {
+	success: boolean;
+	code: number;
+	msg: string;
+	data: any;
 }
 
 // [config={isRaw:false,service:""}] http client 的配置
@@ -53,14 +63,18 @@ declare module 'r-networking' {
 
 		static mw_slots_manager: MWSlotsManager;
 
-		createPostJSON(url: string, params:any, options?:ApiOptions): Promise<any>;
-		createGet(url: string, params:any, options?:ApiOptions): Promise<any>;
+		createPostJSON(url: string, params: any, options?: ApiOptions): Promise<any>;
+
+		createGet(url: string, params: any, options?: ApiOptions): Promise<any>;
 
 	}
+
 	export class BasicClient {
 		constructor(config: ClientConfig, request_mws: [any?], response_mws: [any?]);
-		createPostJSON(url: string, params?:any, options?:ApiOptions): Promise<any>;
-		createGet(url: string, params?:any, options?:ApiOptions): Promise<any>;
+
+		createPostJSON(url: string, params?: any, options?: ApiOptions): Promise<ResType>;
+
+		createGet(url: string, params?: any, options?: ApiOptions): Promise<ResType>;
 	}
 
 }
