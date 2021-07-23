@@ -81,7 +81,7 @@ class BasicClient {
       let res = await this.httpClient.get(url, config);
       return resHandler(res, this.isRaw);
     } catch (e) {
-      if (e.isAccessInvalid || e.isLdapNeeded) {
+      if (e &&(e.isAccessInvalid || e.isLdapNeeded)) {
         //第一次请求鉴权失败
         console.log('r-networking createGet 第一次请求鉴权失败');
         try {

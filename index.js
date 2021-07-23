@@ -43,7 +43,8 @@ module.exports = {
   service_providers,
   client,
   rawClient,
-  setAdapter(adapter) {// 适配 小程序axios-miniprogram-adapter
-    axios.defaults.adapter = adapter.default;
+  setAdapter(adapter) {
+    // 适配 小程序axios-miniprogram-adapter
+    axios.defaults.adapter = adapter;
   }
 }
