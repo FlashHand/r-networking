@@ -1,3 +1,4 @@
+import {AxiosAdapter} from 'axios';
 interface ClientConfig {
 	/**
 	 * isRaw:是否直接返回AxiosResponse实例
@@ -77,5 +78,6 @@ declare module 'r-networking' {
 
 		createGet(url: string, params?: any, options?: ApiOptions): Promise<ResType>;
 	}
+	export function setAdapter(adapter:AxiosAdapter):void;
 
 }
