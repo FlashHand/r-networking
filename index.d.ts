@@ -85,6 +85,6 @@ declare module 'r-networking' {
 		createGet(url: string, params?: any, options?: ApiOptions): Promise<ResType>;
 	}
 
-	export function setAdapter(adapter: AxiosAdapter): void;
+	export function setAdapter(adapter: any): void;
 
 }
