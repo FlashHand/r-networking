@@ -1,4 +1,5 @@
 import {AxiosAdapter} from 'axios';
+
 interface ClientConfig {
 	/**
 	 * isRaw:是否直接返回AxiosResponse实例
@@ -57,6 +58,8 @@ declare module 'r-networking' {
 		const createPostJSON: (url: string, params?: any, option?: any) => Promise<any>
 		const createGetBlob: (url: string, params?: any) => Promise<any>
 		const createPostBlob: (url: string, params?: any) => Promise<any>
+		const createPost: (url: string, params?: any) => Promise<ResType>;
+
 	}
 
 	export class RysClient {
@@ -68,16 +71,20 @@ declare module 'r-networking' {
 
 		createGet(url: string, params: any, options?: ApiOptions): Promise<any>;
 
+		createPost(url: string, params?: any): Promise<ResType>;
+
 	}
 
 	export class BasicClient {
-		constructor(config: ClientConfig, request_mws: [any]|[], response_mws: [any?]);
+		constructor(config: ClientConfig, request_mws: [any] | [], response_mws: [any?]);
 
 		createPostJSON(url: string, params?: any, options?: ApiOptions): Promise<ResType>;
+
 		createPost(url: string, params?: any): Promise<ResType>;
 
 		createGet(url: string, params?: any, options?: ApiOptions): Promise<ResType>;
 	}
-	export function setAdapter(adapter:AxiosAdapter):void;
+
+	export function setAdapter(adapter: AxiosAdapter): void;
 
 }
