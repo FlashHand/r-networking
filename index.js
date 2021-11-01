@@ -6,7 +6,7 @@ const RysClient = require('./api_clients/RysClient');
 const client = RysClient.createClient();
 const rawClient = RysClient.createRawClient({ isRaw: true });
 const axios = require('axios');
-
+const MWSlotsManager = require('./api_clients/MWSlotsManager');
 /**
  * @module r-networking
  * @desc **common**不推荐使用！是一个没有注入微服务根路由的provider，可以用来对接任何接口，但由于common对接的多种微服务时中间件作用域无法根据微服务区分。
@@ -43,6 +43,7 @@ module.exports = {
   service_providers,
   client,
   rawClient,
+  MWSlotsManager,
   setAdapter(adapter) {
     // 适配 小程序axios-miniprogram-adapter
     axios.defaults.adapter = adapter;
