@@ -1,4 +1,5 @@
 import {AxiosAdapter} from 'axios';
+import {MWSlotsManager} from 'r-networking';
 
 interface ClientConfig {
 	timeout?: number;
@@ -54,6 +55,18 @@ interface ResType {
 // 	constructor()
 //
 // }
+declare class AuthClient {
+	constructor(config: ClientConfig, request_mws: [any?], response_mws: [any?]);
+
+	static mw_slots_manager: MWSlotsManager;
+
+	createPostJSON(url: string, params: any, options?: ApiOptions): Promise<any>;
+
+	createGet(url: string, params: any, options?: ApiOptions): Promise<any>;
+
+	createPost(url: string, params?: any): Promise<ResType>;
+
+}
 
 declare module 'r-networking' {
 	export class MWClass {
@@ -81,7 +94,9 @@ declare module 'r-networking' {
 		const createGetBlob: (url: string, params?: any) => Promise<any>
 		const createPostBlob: (url: string, params?: any) => Promise<any>
 		const createPost: (url: string, params?: any) => Promise<ResType>;
-
+	}
+	export namespace service_providers{
+		const user_auth_wild:AuthClient
 	}
 
 	export class RysClient {
