@@ -132,7 +132,7 @@ class BasicClient {
 		return new Promise((resolve, reject) => {
 			this.httpClient
 				.post(url, params, {
-					responseType: 'blob'
+					responseType: 'blob',
 				})
 				.then(res => {
 					resolve(resHandler(res, this.isRaw));

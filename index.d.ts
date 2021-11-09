@@ -121,6 +121,8 @@ declare module 'r-networking' {
 
 		createPost(url: string, params?: any): Promise<any>;
 
+		createPostBlob(url: string, params?: any): Promise<any>;
+
 		createGet(url: string, params?: any, options?: ApiOptions): Promise<ResType>;
 	}
 
