@@ -1,7 +1,5 @@
-import {AxiosAdapter} from 'axios';
-import {MWSlotsManager} from 'r-networking';
 
-interface ClientConfig {
+export interface ClientConfig {
 	timeout?: number;
 	/**
 	 * isRaw:是否直接返回AxiosResponse实例
@@ -36,25 +34,6 @@ interface ResType {
 // [config={isRaw:false,service:""}] http client 的配置
 // * @param {boolean} [config.isRaw=false] 是否直接返回AxiosResponse实例
 // * @param {string} [config.service=""]
-// declare class MWClass {
-// 	mws: [any];
-//
-// 	constructor();
-//
-// 	set(injectedMWs: [any]): void
-//
-// 	concat(middlewares: [any]): void
-// }
-
-// declare class MWSlotsManager {
-// 	req_pre: MWClass;
-// 	res_pre: MWClass;
-// 	req_sub: MWClass;
-// 	res_sub: MWClass;
-//
-// 	constructor()
-//
-// }
 declare class AuthClient {
 	constructor(config: ClientConfig, request_mws: [any?], response_mws: [any?]);
 
@@ -78,6 +57,7 @@ declare module 'r-networking' {
 
 		concat(middlewares: [any]): void
 	}
+
 	export class MWSlotsManager {
 		req_pre: MWClass;
 		res_pre: MWClass;
@@ -89,14 +69,14 @@ declare module 'r-networking' {
 	}
 
 	export namespace client {
-		const createGet: (url: string, params?: any, option?: any) => Promise<any>
-		const createPostJSON: (url: string, params?: any, option?: any) => Promise<any>
-		const createGetBlob: (url: string, params?: any) => Promise<any>
-		const createPostBlob: (url: string, params?: any) => Promise<any>
-		const createPost: (url: string, params?: any) => Promise<ResType>;
+		const createPostJSON: (url: string, params: any, options?: ApiOptions) => Promise<any>;
+
+		const createGet: (url: string, params: any, options?: ApiOptions) => Promise<any>;
+
+		const createPost: (url: string, params?: any) => Promise<any>;
 	}
-	export namespace service_providers{
-		const user_auth_wild:AuthClient
+	export namespace service_providers {
+		const user_auth_wild: AuthClient
 	}
 
 	export class RysClient {
@@ -112,10 +92,8 @@ declare module 'r-networking' {
 
 	}
 
-
-
 	export class BasicClient {
-		constructor(config: ClientConfig, request_mws: [any?] , response_mws: [any?]);
+		constructor(config: ClientConfig, request_mws: [any?], response_mws: [any?]);
 
 		createPostJSON(url: string, params?: any, options?: ApiOptions): Promise<any>;
 
