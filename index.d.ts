@@ -69,11 +69,13 @@ declare module 'r-networking' {
 	}
 
 	export namespace client {
-		const createPostJSON: (url: string, params: any, options?: ApiOptions) => Promise<any>;
+		const createPostJSON: (url: string, params?: any, options?: ApiOptions) => Promise<any>;
 
-		const createGet: (url: string, params: any, options?: ApiOptions) => Promise<any>;
+		const createGet: (url: string, params?: any, options?: ApiOptions) => Promise<any>;
 
 		const createPost: (url: string, params?: any) => Promise<any>;
+		const setBaseURL: (url: string) => void;
+
 	}
 	export namespace service_providers {
 		const user_auth_wild: AuthClient
