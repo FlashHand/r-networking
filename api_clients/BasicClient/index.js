@@ -62,10 +62,7 @@ class BasicClient {
 		});
 	}
 	setBaseURL(baseURL){
-		const options = this.httpClient.defaults;
-		options.baseURL = baseURL;
-		this.httpClient = axios.create(options);
-
+		this.httpClient.defaults.baseURL = baseURL;
 	}
 
 	/**
