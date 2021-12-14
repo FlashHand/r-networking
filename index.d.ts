@@ -24,11 +24,11 @@ interface ApiOptions {
 	timeout?: number
 }
 
-interface ResType {
+interface ResType<T> {
 	success: boolean;
 	code: number;
 	msg: string;
-	data: any;
+	data: T|any;
 }
 
 // [config={isRaw:false,service:""}] http client 的配置
@@ -70,8 +70,10 @@ declare module 'r-networking' {
 
 	export namespace client {
 		const createPostJSON: (url: string, params?: any, options?: ApiOptions) => Promise<any>;
+		const createPostJSON: (url: string, params?: any, options?: ApiOptions) => Promise<ResType>;
 
 		const createGet: (url: string, params?: any, options?: ApiOptions) => Promise<any>;
+		const createGet: (url: string, params?: any, options?: ApiOptions) => Promise<ResType>;
 
 		const createPost: (url: string, params?: any) => Promise<any>;
 		const setBaseURL: (url: string) => void;
