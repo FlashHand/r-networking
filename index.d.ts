@@ -31,6 +31,13 @@ interface ResType<T> {
 	data: T|any;
 }
 
+export interface ResItf<T> {
+	success: boolean;
+	code: number;
+	msg: string;
+	data: T;
+}
+
 // [config={isRaw:false,service:""}] http client 的配置
 // * @param {boolean} [config.isRaw=false] 是否直接返回AxiosResponse实例
 // * @param {string} [config.service=""]
@@ -70,10 +77,10 @@ declare module 'r-networking' {
 
 	export namespace client {
 		const createPostJSON: (url: string, params?: any, options?: ApiOptions) => Promise<any>;
-		const createPostJSON: (url: string, params?: any, options?: ApiOptions) => Promise<ResType>;
+		const createPostJSON: (url: string, params?: any, options?: ApiOptions) => Promise<ResItf>;
 
 		const createGet: (url: string, params?: any, options?: ApiOptions) => Promise<any>;
-		const createGet: (url: string, params?: any, options?: ApiOptions) => Promise<ResType>;
+		const createGet: (url: string, params?: any, options?: ApiOptions) => Promise<ResItf>;
 
 		const createPost: (url: string, params?: any) => Promise<any>;
 		const setBaseURL: (url: string) => void;
