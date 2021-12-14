@@ -61,6 +61,12 @@ class BasicClient {
 			this.httpClient.interceptors.response.use(mw.fullfilled, mw.rejected);
 		});
 	}
+	setBaseURL(baseURL){
+		const options = this.httpClient.defaults;
+		options.baseURL = baseURL;
+		this.httpClient = axios.create(options);
+
+	}
 
 	/**
 	 * @description 创建get请求api

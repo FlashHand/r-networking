@@ -89,6 +89,8 @@ declare module 'r-networking' {
 		createGet(url: string, params: any, options?: ApiOptions): Promise<any>;
 
 		createPost(url: string, params?: any): Promise<ResType>;
+		setBaseURL(url: string): void
+
 
 	}
 
@@ -102,6 +104,8 @@ declare module 'r-networking' {
 		createPostBlob(url: string, params?: any): Promise<any>;
 
 		createGet(url: string, params?: any, options?: ApiOptions): Promise<ResType>;
+
+		setBaseURL(url: string): void
 	}
 
 	export function setAdapter(adapter: any): void;
