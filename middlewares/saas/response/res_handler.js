@@ -3,7 +3,7 @@
  * @author Wang Bo (ralwayne@163.com)
  * @date 2020/8/7 11:10 AM
  */
-const {app_helper} = require('r-foundation');
+const app_helper = require('../../../helpers/app_helper');
 const fullfilled = response => {
   try {
     //data 是undefined时设为空对象
