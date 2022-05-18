@@ -1,3 +1,10 @@
+interface MWClass {
+	mws: [any];
+
+	set(injectedMWs: [any]): void
+
+	concat(middlewares: [any]): void
+}
 
 export interface ClientConfig {
 	timeout?: number;
@@ -30,6 +37,12 @@ interface ResType {
 	msg: string;
 	data: any;
 }
+interface MWSlotsManager {
+	req_pre: MWClass;
+	res_pre: MWClass;
+	req_sub: MWClass;
+	res_sub: MWClass;
+}
 
 // [config={isRaw:false,service:""}] http client 的配置
 // * @param {boolean} [config.isRaw=false] 是否直接返回AxiosResponse实例
@@ -43,7 +56,7 @@ declare class AuthClient {
 
 	createGet(url: string, params: any, options?: ApiOptions): Promise<any>;
 
-	createPost(url: string, params?: any): Promise<ResType>;
+	createPost(url: string, params?: any): Promise<any>;
 
 }
 
@@ -88,7 +101,7 @@ declare module 'r-networking' {
 
 		createGet(url: string, params: any, options?: ApiOptions): Promise<any>;
 
-		createPost(url: string, params?: any): Promise<ResType>;
+		createPost(url: string, params?: any): Promise<any>;
 
 	}
 
@@ -101,7 +114,7 @@ declare module 'r-networking' {
 
 		createPostBlob(url: string, params?: any): Promise<any>;
 
-		createGet(url: string, params?: any, options?: ApiOptions): Promise<ResType>;
+		createGet(url: string, params?: any, options?: ApiOptions): Promise<any>;
 	}
 
 	export function setAdapter(adapter: any): void;
