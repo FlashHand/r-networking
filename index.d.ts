@@ -31,11 +31,18 @@ interface ApiOptions {
 	timeout?: number
 }
 
-interface ResType {
+interface ResType<T> {
 	success: boolean;
 	code: number;
 	msg: string;
-	data: any;
+	data: T|any;
+}
+
+export interface ResItf<T> {
+	success: boolean;
+	code: number;
+	msg: string;
+	data: T;
 }
 interface MWSlotsManager {
 	req_pre: MWClass;
@@ -82,11 +89,13 @@ declare module 'r-networking' {
 	}
 
 	export namespace client {
-		const createPostJSON: (url: string, params: any, options?: ApiOptions) => Promise<any>;
+		const createPostJSON: (url: string, params?: any, options?: ApiOptions) => Promise<any>;
 
-		const createGet: (url: string, params: any, options?: ApiOptions) => Promise<any>;
+		const createGet: (url: string, params?: any, options?: ApiOptions) => Promise<any>;
 
 		const createPost: (url: string, params?: any) => Promise<any>;
+		const setBaseURL: (url: string) => void;
+
 	}
 	export namespace service_providers {
 		const user_auth_wild: AuthClient
@@ -102,6 +111,8 @@ declare module 'r-networking' {
 		createGet(url: string, params: any, options?: ApiOptions): Promise<any>;
 
 		createPost(url: string, params?: any): Promise<any>;
+		setBaseURL(url: string): void
+
 
 	}
 
@@ -115,6 +126,8 @@ declare module 'r-networking' {
 		createPostBlob(url: string, params?: any): Promise<any>;
 
 		createGet(url: string, params?: any, options?: ApiOptions): Promise<any>;
+
+		setBaseURL(url: string): void
 	}
 
 	export function setAdapter(adapter: any): void;

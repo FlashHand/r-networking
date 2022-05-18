@@ -28,7 +28,7 @@ class BasicClient {
 	 * @param {object[]} [request_mws=[]]  请求中间件队列
 	 * @param {object[]} [response_mws=[]]  返回中间件队列
 	 */
-	constructor(config = {isRaw: false, withCredentials: false,}, request_mws = [], response_mws = []) {
+	constructor(config = {isRaw: false, withCredentials: false, rejectUnauthorized: false}, request_mws = [], response_mws = []) {
 		//为请求和返回中间件数组，增加中间件头尾插槽
 		let baseURL =
 			process.env.VUE_APP_BASE_URL ||
@@ -51,7 +51,8 @@ class BasicClient {
 			baseURL,
 			timeout,
 			headers,
-			withCredentials: config.withCredentials || false
+			withCredentials: config.withCredentials || false,
+			rejectUnauthorized: config.rejectUnauthorized || false
 		};
 		this.httpClient = axios.create(options);
 		request_mws.forEach(mw => {
@@ -60,6 +61,9 @@ class BasicClient {
 		response_mws.forEach(mw => {
 			this.httpClient.interceptors.response.use(mw.fullfilled, mw.rejected);
 		});
+	}
+	setBaseURL(baseURL){
+		this.httpClient.defaults.baseURL = baseURL;
 	}
 
 	/**
