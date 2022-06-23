@@ -35,15 +35,15 @@ interface ResType<T> {
 	success: boolean;
 	code: number;
 	msg: string;
-	data: T|any;
+	data: T | any;
 }
 
-export interface ResItf<T> {
-	success: boolean;
-	code: number;
-	msg: string;
-	data: T;
-}
+// export interface ResItf<T> {
+// 	success: boolean;
+// 	code: number;
+// 	msg: string;
+// 	data: T;
+// }
 interface MWSlotsManager {
 	req_pre: MWClass;
 	res_pre: MWClass;
@@ -68,6 +68,7 @@ declare class AuthClient {
 }
 
 declare module 'r-networking' {
+
 	export class MWClass {
 		mws: [any];
 
@@ -111,6 +112,7 @@ declare module 'r-networking' {
 		createGet(url: string, params: any, options?: ApiOptions): Promise<any>;
 
 		createPost(url: string, params?: any): Promise<any>;
+
 		setBaseURL(url: string): void
 
 
@@ -132,4 +134,10 @@ declare module 'r-networking' {
 
 	export function setAdapter(adapter: any): void;
 
+	export interface ResItf<T> {
+		success: boolean;
+		code: number;
+		msg: string;
+		data: T;
+	}
 }
