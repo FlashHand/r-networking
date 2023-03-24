@@ -9,8 +9,8 @@ export class BasicClient {
 		this.axiosClient.interceptors.response.use
 	}
 
-	createPost<P>(url: string, params?: P&any, config?: AxiosRequestConfig) {
-		return (params?: P&any, config?: AxiosRequestConfig) => {
+	createPost<P>(url: string, params?: P & any, config?: AxiosRequestConfig) {
+		return (params?: P & any, config?: AxiosRequestConfig) => {
 			return this.axiosClient.post(url, params, config);
 		}
 
