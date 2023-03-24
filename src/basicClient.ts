@@ -6,10 +6,11 @@ export class BasicClient {
 	constructor(config: AxiosRequestConfig) {
 		config.headers = {'Content-Type': 'application/json'};
 		this.axiosClient = axios.create(config);
+		this.axiosClient.interceptors.response.use
 	}
 
-	createPost<P>(url: string, params?: any, config?: AxiosRequestConfig) {
-		return (params?: any, config?: AxiosRequestConfig) => {
+	createPost<P>(url: string, params?: P&any, config?: AxiosRequestConfig) {
+		return (params?: P&any, config?: AxiosRequestConfig) => {
 			return this.axiosClient.post(url, params, config);
 		}
 
