@@ -10,10 +10,6 @@ node_modules/
 node_modules__/
 yarn-error.log
 lerna-debug.log
-/dist
-/dist_aas
-/dist_pre
-/dist_test
 # local env files
 .env.local
 .env.*.local
