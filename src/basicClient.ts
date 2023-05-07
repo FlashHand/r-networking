@@ -46,7 +46,6 @@ export class BasicClient {
 		this.defaultConfig.adapter = adapter;
 		this.axiosClient.defaults.adapter = adapter;
 	}
-
 	/**
 	 * 创建一个post请求函数,支持自定义AxiosRequestConfig
 	 * @param url
