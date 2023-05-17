@@ -76,4 +76,15 @@ export class BasicClient {
 		return res.data;
 	}
 
+	setRequestInterceptors(interceptor: IInterceptor[]) {
+		interceptor.forEach((interceptor) => {
+			this.axiosClient.interceptors.request.use(interceptor.fullfilled, interceptor.rejected)
+		})
+	}
+	setResponseInterceptors(interceptor: IInterceptor[]) {
+		interceptor.forEach((interceptor) => {
+			this.axiosClient.interceptors.response.use(interceptor.fullfilled, interceptor.rejected)
+		})
+	}
+
 }

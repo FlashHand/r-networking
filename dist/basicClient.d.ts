@@ -34,4 +34,6 @@ export declare class BasicClient {
      * @param config
      */
     get<P>(url: string, params?: P, config?: AxiosRequestConfig): Promise<any>;
+    setRequestInterceptors(interceptor: IInterceptor[]): void;
+    setResponseInterceptors(interceptor: IInterceptor[]): void;
 }

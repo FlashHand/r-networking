@@ -60,6 +60,16 @@ var BasicClient = class {
     const res = await this.axiosClient.get(url, currentConfig);
     return res.data;
   }
+  setRequestInterceptors(interceptor) {
+    interceptor.forEach((interceptor2) => {
+      this.axiosClient.interceptors.request.use(interceptor2.fullfilled, interceptor2.rejected);
+    });
+  }
+  setResponseInterceptors(interceptor) {
+    interceptor.forEach((interceptor2) => {
+      this.axiosClient.interceptors.response.use(interceptor2.fullfilled, interceptor2.rejected);
+    });
+  }
 };
 
 // src/index.ts
