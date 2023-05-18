@@ -1,14 +1,18 @@
-import { AxiosRequestConfig } from "axios";
-export interface IInterceptor {
+import { AxiosRequestConfig, AxiosResponse } from "axios";
+export interface IReqInterceptor {
     fullfilled: (config: AxiosRequestConfig) => Promise<AxiosRequestConfig>;
+    rejected: (error: any) => void;
+}
+export interface IResInterceptor {
+    fullfilled: (config: AxiosResponse) => Promise<AxiosResponse>;
     rejected: (error: any) => void;
 }
 export declare class BasicClient {
     private axiosClient;
     defaultConfig: AxiosRequestConfig;
     constructor(config?: AxiosRequestConfig, interceptors?: {
-        requestInterceptors: IInterceptor[];
-        responseInterceptors: IInterceptor[];
+        requestInterceptors: IReqInterceptor[];
+        responseInterceptors: IResInterceptor[];
     });
     /**
      * 设置baseURL
@@ -34,6 +38,6 @@ export declare class BasicClient {
      * @param config
      */
     get<P>(url: string, params?: P, config?: AxiosRequestConfig): Promise<any>;
-    setRequestInterceptors(interceptor: IInterceptor[]): void;
-    setResponseInterceptors(interceptor: IInterceptor[]): void;
+    setRequestInterceptors(interceptor: IReqInterceptor[]): void;
+    setResponseInterceptors(interceptor: IResInterceptor[]): void;
 }

@@ -1,8 +1,12 @@
-import axios, {AxiosInstance, AxiosRequestConfig} from "axios";
+import axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse} from "axios";
 import qs from 'qs';
 
-export interface IInterceptor {
+export interface IReqInterceptor {
 	fullfilled: (config: AxiosRequestConfig) => Promise<AxiosRequestConfig>
+	rejected: (error: any) => void
+}
+export interface IResInterceptor {
+	fullfilled: (config: AxiosResponse) => Promise<AxiosResponse>
 	rejected: (error: any) => void
 }
 
@@ -16,8 +20,8 @@ export class BasicClient {
 	constructor(
 		config?: AxiosRequestConfig,
 		interceptors?: {
-			requestInterceptors: IInterceptor[],
-			responseInterceptors: IInterceptor[]
+			requestInterceptors: IReqInterceptor[],
+			responseInterceptors: IResInterceptor[]
 	}) {
 		this.defaultConfig = Object.assign(this.defaultConfig, config);
 		this.axiosClient = axios.create(config);
@@ -76,12 +80,12 @@ export class BasicClient {
 		return res.data;
 	}
 
-	setRequestInterceptors(interceptor: IInterceptor[]) {
+	setRequestInterceptors(interceptor: IReqInterceptor[]) {
 		interceptor.forEach((interceptor) => {
 			this.axiosClient.interceptors.request.use(interceptor.fullfilled, interceptor.rejected)
 		})
 	}
-	setResponseInterceptors(interceptor: IInterceptor[]) {
+	setResponseInterceptors(interceptor: IResInterceptor[]) {
 		interceptor.forEach((interceptor) => {
 			this.axiosClient.interceptors.response.use(interceptor.fullfilled, interceptor.rejected)
 		})
