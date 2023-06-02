@@ -1,6 +1,6 @@
 {
   "name": "r-networking",
-  "version": "1.0.6",
+  "version": "1.0.8",
   "description": "> TODO: description",
   "author": "BoWang <ralwayne@163.com>",
   "homepage": "",
@@ -13,7 +13,7 @@
     "build:cjs": "esbuild src/index.ts --bundle --platform=node  --outfile=dist/index.js --external:axios --external:qs",
     "build": "yarn build:esm && yarn build:cjs && tsc --emitDeclarationOnly --declaration --outDir dist"
   },
-  "exports":{
+  "exports": {
     "import": "./dist/index.mjs",
     "require": "./dist/index.js",
     "types": "./dist/index.d.ts"
