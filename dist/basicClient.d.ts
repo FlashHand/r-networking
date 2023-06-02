@@ -31,7 +31,14 @@ export declare class BasicClient {
      * @param params
      * @param config
      */
-    post<P>(url: string, body: P, params?: P, config?: AxiosRequestConfig): Promise<unknown>;
+    postBody<B, P>(url: string, body: B, params?: P, config?: AxiosRequestConfig): Promise<unknown>;
+    /**
+     * 创建一个post请求函数,支持自定义AxiosRequestConfig
+     * @param url
+     * @param params
+     * @param config
+     */
+    post<P>(url: string, params?: P, config?: AxiosRequestConfig): Promise<unknown>;
     /**
      * put,支持自定义AxiosRequestConfig
      * @param url

@@ -64,7 +64,7 @@ export class BasicClient {
 	 * @param params
 	 * @param config
 	 */
-	async post<P>(url: string, body: P, params?: P, config?: AxiosRequestConfig) {
+	async postBody<B,P>(url: string, body: B, params?: P, config?: AxiosRequestConfig) {
 		let postConfig = Object.assign({}, this.defaultConfig, config)
 		if (params) {
 			postConfig.params = params
@@ -73,6 +73,18 @@ export class BasicClient {
 			}
 		}
 		const res = await this.axiosClient.post(url, body, postConfig)
+		return res.data
+	}
+
+	/**
+	 * 创建一个post请求函数,支持自定义AxiosRequestConfig
+	 * @param url
+	 * @param params
+	 * @param config
+	 */
+	async post<P>(url: string, params?: P, config?: AxiosRequestConfig) {
+		let postConfig = Object.assign({}, this.defaultConfig, config)
+		const res = await this.axiosClient.post(url, params, postConfig)
 		return res.data
 	}
 

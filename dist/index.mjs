@@ -45,7 +45,7 @@ var BasicClient = class {
    * @param params
    * @param config
    */
-  async post(url, body, params, config) {
+  async postBody(url, body, params, config) {
     let postConfig = Object.assign({}, this.defaultConfig, config);
     if (params) {
       postConfig.params = params;
@@ -54,6 +54,17 @@ var BasicClient = class {
       };
     }
     const res = await this.axiosClient.post(url, body, postConfig);
+    return res.data;
+  }
+  /**
+   * 创建一个post请求函数,支持自定义AxiosRequestConfig
+   * @param url
+   * @param params
+   * @param config
+   */
+  async post(url, params, config) {
+    let postConfig = Object.assign({}, this.defaultConfig, config);
+    const res = await this.axiosClient.post(url, params, postConfig);
     return res.data;
   }
   /**
