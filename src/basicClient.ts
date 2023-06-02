@@ -1,6 +1,5 @@
 import axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse} from "axios";
 import qs from 'qs';
-
 export interface IReqInterceptor {
 	fullfilled: (config: AxiosRequestConfig) => Promise<AxiosRequestConfig>
 	rejected: (error: any) => void
@@ -89,6 +88,13 @@ export class BasicClient {
 		interceptor.forEach((interceptor) => {
 			this.axiosClient.interceptors.response.use(interceptor.fullfilled, interceptor.rejected)
 		})
+	}
+
+	appendRequestInterceptor(interceptor: IReqInterceptor) {
+		this.axiosClient.interceptors.request.use(interceptor.fullfilled, interceptor.rejected)
+	}
+	appendResponseInterceptor(interceptor: IResInterceptor) {
+		this.axiosClient.interceptors.response.use(interceptor.fullfilled, interceptor.rejected)
 	}
 
 }
