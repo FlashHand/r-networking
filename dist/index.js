@@ -18,10 +18,6 @@ var __copyProps = (to, from, except, desc) => {
   return to;
 };
 var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
-  // If the importer is in node compatibility mode or this is not an ESM
-  // file that has been converted to a CommonJS file using a Babel-
-  // compatible transform (i.e. "__esModule" has not been set), then set
-  // "default" to the CommonJS "module.exports" for node compatibility.
   isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
   mod
 ));
@@ -53,39 +49,24 @@ var BasicClient = class {
       this.axiosClient.interceptors.response.use(interceptor.fullfilled, interceptor.rejected);
     });
   }
-  /**
-   * 设置baseURL
-   * @param baseURL
-   */
   setBaseURL(baseURL) {
     this.defaultConfig.baseURL = baseURL;
     this.axiosClient.defaults.baseURL = baseURL;
   }
-  /**
-   * 设置适配器
-   * @param adapter
-   */
   setAdapter(adapter) {
     this.defaultConfig.adapter = adapter;
     this.axiosClient.defaults.adapter = adapter;
   }
-  /**
-   * 创建一个post请求函数,支持自定义AxiosRequestConfig
-   * @param url
-   * @param params
-   * @param config
-   */
   async post(url, params, config) {
     const postConfig = Object.assign({}, this.defaultConfig, config);
     const res = await this.axiosClient.post(url, params, postConfig);
     return res.data;
   }
-  /**
-   * 创建一个get请求函数,支持自定义AxiosRequestConfig
-   * @param url
-   * @param params
-   * @param config
-   */
+  async postForm(url, params, config) {
+    const postConfig = Object.assign({}, this.defaultConfig, config);
+    const res = await this.axiosClient.post(url, import_qs.default.stringify(params), postConfig);
+    return res.data;
+  }
   async get(url, params, config) {
     const getConfig = {
       params,

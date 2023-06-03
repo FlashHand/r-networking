@@ -32,6 +32,13 @@ export declare class BasicClient {
      */
     post<P>(url: string, params: P, config?: AxiosRequestConfig): Promise<any>;
     /**
+     * 创建一个post请求函数,使用x-www-form-urlencoded
+     * @param url
+     * @param params
+     * @param config
+     */
+    postForm<P>(url: string, params: P, config?: AxiosRequestConfig): Promise<any>;
+    /**
      * 创建一个get请求函数,支持自定义AxiosRequestConfig
      * @param url
      * @param params

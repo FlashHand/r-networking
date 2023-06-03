@@ -16,39 +16,24 @@ var BasicClient = class {
       this.axiosClient.interceptors.response.use(interceptor.fullfilled, interceptor.rejected);
     });
   }
-  /**
-   * 设置baseURL
-   * @param baseURL
-   */
   setBaseURL(baseURL) {
     this.defaultConfig.baseURL = baseURL;
     this.axiosClient.defaults.baseURL = baseURL;
   }
-  /**
-   * 设置适配器
-   * @param adapter
-   */
   setAdapter(adapter) {
     this.defaultConfig.adapter = adapter;
     this.axiosClient.defaults.adapter = adapter;
   }
-  /**
-   * 创建一个post请求函数,支持自定义AxiosRequestConfig
-   * @param url
-   * @param params
-   * @param config
-   */
   async post(url, params, config) {
     const postConfig = Object.assign({}, this.defaultConfig, config);
     const res = await this.axiosClient.post(url, params, postConfig);
     return res.data;
   }
-  /**
-   * 创建一个get请求函数,支持自定义AxiosRequestConfig
-   * @param url
-   * @param params
-   * @param config
-   */
+  async postForm(url, params, config) {
+    const postConfig = Object.assign({}, this.defaultConfig, config);
+    const res = await this.axiosClient.post(url, qs.stringify(params), postConfig);
+    return res.data;
+  }
   async get(url, params, config) {
     const getConfig = {
       params,

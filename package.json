@@ -13,9 +13,12 @@
     "build:cjs": "esbuild src/index.ts --bundle --platform=node  --outfile=dist/index.js --external:axios --external:qs",
     "build": "yarn build:esm && yarn build:cjs && tsc --emitDeclarationOnly --declaration --outDir dist"
   },
-  "exports":{
+  "exports": {
     "import": "./dist/index.mjs",
     "require": "./dist/index.js",
     "types": "./dist/index.d.ts"
+  },
+  "dependencies": {
+    "@types/qs": "^6.9.7"
   }
 }

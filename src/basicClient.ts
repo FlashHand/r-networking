@@ -63,6 +63,18 @@ export class BasicClient {
 	}
 
 	/**
+	 * 创建一个post请求函数,使用x-www-form-urlencoded
+	 * @param url
+	 * @param params
+	 * @param config
+	 */
+	async postForm<P>(url: string, params: P, config?: AxiosRequestConfig) {
+		const postConfig = Object.assign({}, this.defaultConfig, config);
+		const res =  await this.axiosClient.post(url, qs.stringify(params), postConfig);
+		return res.data;
+	}
+
+	/**
 	 * 创建一个get请求函数,支持自定义AxiosRequestConfig
 	 * @param url
 	 * @param params
