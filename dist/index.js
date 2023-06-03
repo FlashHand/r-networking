@@ -43,10 +43,16 @@ var BasicClient = class {
     this.defaultConfig = Object.assign(this.defaultConfig, config);
     this.axiosClient = import_axios.default.create(config);
     interceptors?.requestInterceptors?.forEach((interceptor) => {
-      this.axiosClient.interceptors.request.use(interceptor.fullfilled, interceptor.rejected);
+      this.axiosClient.interceptors.request.use(
+        interceptor.fullfilled,
+        interceptor.rejected
+      );
     });
     interceptors?.responseInterceptors?.forEach((interceptor) => {
-      this.axiosClient.interceptors.response.use(interceptor.fullfilled, interceptor.rejected);
+      this.axiosClient.interceptors.response.use(
+        interceptor.fullfilled,
+        interceptor.rejected
+      );
     });
   }
   setBaseURL(baseURL) {
@@ -57,9 +63,53 @@ var BasicClient = class {
     this.defaultConfig.adapter = adapter;
     this.axiosClient.defaults.adapter = adapter;
   }
+  async postBody(url, body, params, config) {
+    let postConfig = Object.assign({}, this.defaultConfig, config);
+    if (params) {
+      postConfig.params = params;
+      postConfig.paramsSerializer = (params2) => {
+        return import_qs.default.stringify(params2, { arrayFormat: "indices" });
+      };
+    }
+    const res = await this.axiosClient.post(url, body, postConfig);
+    return res.data;
+  }
   async post(url, params, config) {
-    const postConfig = Object.assign({}, this.defaultConfig, config);
+    let postConfig = Object.assign({}, this.defaultConfig, config);
     const res = await this.axiosClient.post(url, params, postConfig);
+    return res.data;
+  }
+  async put(url, body, params, config) {
+    let postConfig = Object.assign({}, this.defaultConfig, config);
+    if (params) {
+      postConfig.params = params;
+      postConfig.paramsSerializer = (params2) => {
+        return import_qs.default.stringify(params2, { arrayFormat: "indices" });
+      };
+    }
+    const res = await this.axiosClient.put(url, body, postConfig);
+    return res.data;
+  }
+  async delete(url, params, config) {
+    const getConfig = {
+      params,
+      paramsSerializer: (params2) => {
+        return import_qs.default.stringify(params2, { arrayFormat: "indices" });
+      }
+    };
+    const currentConfig = Object.assign(getConfig, this.defaultConfig);
+    const res = await this.axiosClient.delete(url, currentConfig);
+    return res.data;
+  }
+  async patch(url, body, params, config) {
+    let postConfig = Object.assign({}, this.defaultConfig, config);
+    if (params) {
+      postConfig.params = params;
+      postConfig.paramsSerializer = (params2) => {
+        return import_qs.default.stringify(params2, { arrayFormat: "indices" });
+      };
+    }
+    const res = await this.axiosClient.patch(url, body, postConfig);
     return res.data;
   }
   async postForm(url, params, config) {
@@ -78,14 +128,26 @@ var BasicClient = class {
     const res = await this.axiosClient.get(url, currentConfig);
     return res.data;
   }
+  appendRequestInterceptor(interceptor) {
+    this.axiosClient.interceptors.request.use(interceptor.fullfilled, interceptor.rejected);
+  }
+  appendResponseInterceptor(interceptor) {
+    this.axiosClient.interceptors.response.use(interceptor.fullfilled, interceptor.rejected);
+  }
   setRequestInterceptors(interceptor) {
     interceptor.forEach((interceptor2) => {
-      this.axiosClient.interceptors.request.use(interceptor2.fullfilled, interceptor2.rejected);
+      this.axiosClient.interceptors.request.use(
+        interceptor2.fullfilled,
+        interceptor2.rejected
+      );
     });
   }
   setResponseInterceptors(interceptor) {
     interceptor.forEach((interceptor2) => {
-      this.axiosClient.interceptors.response.use(interceptor2.fullfilled, interceptor2.rejected);
+      this.axiosClient.interceptors.response.use(
+        interceptor2.fullfilled,
+        interceptor2.rejected
+      );
     });
   }
 };

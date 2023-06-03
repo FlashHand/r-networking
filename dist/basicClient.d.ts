@@ -1,4 +1,4 @@
-import { AxiosRequestConfig, AxiosResponse } from "axios";
+import { AxiosRequestConfig, AxiosResponse } from 'axios';
 export interface IReqInterceptor {
     fullfilled: (config: AxiosRequestConfig) => Promise<AxiosRequestConfig>;
     rejected: (error: any) => void;
@@ -27,10 +27,42 @@ export declare class BasicClient {
     /**
      * 创建一个post请求函数,支持自定义AxiosRequestConfig
      * @param url
+     * @param body
      * @param params
      * @param config
      */
-    post<P>(url: string, params: P, config?: AxiosRequestConfig): Promise<any>;
+    postBody<B, P>(url: string, body: B, params?: P, config?: AxiosRequestConfig): Promise<any>;
+    /**
+     * 创建一个post请求函数,支持自定义AxiosRequestConfig
+     * @param url
+     * @param params
+     * @param config
+     */
+    post<P>(url: string, params?: P, config?: AxiosRequestConfig): Promise<any>;
+    /**
+     * put,支持自定义AxiosRequestConfig
+     * @param url
+     * @param body
+     * @param params
+     * @param config
+     */
+    put<P>(url: string, body: P, params?: P, config?: AxiosRequestConfig): Promise<any>;
+    /**
+     * delete,支持自定义AxiosRequestConfig
+     * @param url
+     * @param body
+     * @param params
+     * @param config
+     */
+    delete<P>(url: string, params?: P, config?: AxiosRequestConfig): Promise<any>;
+    /**
+     * 创建一个patch请求函数,支持自定义AxiosRequestConfig
+     * @param url
+     * @param body
+     * @param params
+     * @param config
+     */
+    patch<P>(url: string, body: P, params?: P, config?: AxiosRequestConfig): Promise<any>;
     /**
      * 创建一个post请求函数,使用x-www-form-urlencoded
      * @param url
@@ -45,6 +77,8 @@ export declare class BasicClient {
      * @param config
      */
     get<P>(url: string, params?: P, config?: AxiosRequestConfig): Promise<any>;
+    appendRequestInterceptor(interceptor: IReqInterceptor): void;
+    appendResponseInterceptor(interceptor: IResInterceptor): void;
     setRequestInterceptors(interceptor: IReqInterceptor[]): void;
     setResponseInterceptors(interceptor: IResInterceptor[]): void;
 }
