@@ -1,3 +1,3 @@
-import {BasicClient} from "./basicClient";
-export {BasicClient} from './basicClient';
-export const rClient = new BasicClient();
+import {RClient} from "./rClient";
+export {RClient} from './rClient';
+export const rClient = new RClient();
