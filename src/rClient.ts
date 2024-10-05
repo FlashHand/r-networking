@@ -98,11 +98,12 @@ export class RClient{
     return this._axiosClient.post(url,body,requestConfig) as Promise<T>
   }
 
-  get<T = any>(url:string,config?:AxiosRequestConfig){
+  async get<T = any>(url:string,config?:AxiosRequestConfig){
     const requestConfig = {
       ...config
     }
-    return this._axiosClient.get(url, requestConfig) as Promise<T>;
+    const res = await this._axiosClient.get(url, requestConfig);
+    return (res.data||null) as T;
   }
 }
 export const rClient = new RClient();

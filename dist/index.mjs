@@ -70,11 +70,12 @@ var RClient = class {
     }
     return this._axiosClient.post(url, body, requestConfig);
   }
-  get(url, config) {
+  async get(url, config) {
     const requestConfig = {
       ...config
     };
-    return this._axiosClient.get(url, requestConfig);
+    const res = await this._axiosClient.get(url, requestConfig);
+    return res.data || null;
   }
 };
 var rClient = new RClient();
