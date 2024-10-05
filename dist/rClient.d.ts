@@ -7,9 +7,9 @@ export interface IResInterceptor {
     fullfilled: (config: AxiosResponse) => Promise<AxiosResponse>;
     rejected: (error: any) => void;
 }
-interface IClientOption {
-    config: AxiosRequestConfig;
-    interceptors: {
+export interface RClientOption {
+    config?: AxiosRequestConfig;
+    interceptors?: {
         requestInterceptors: IReqInterceptor[];
         responseInterceptors: IResInterceptor[];
     };
@@ -21,7 +21,7 @@ export interface RPostConfig {
 export declare class RClient {
     private _axiosClient;
     defaultConfig: AxiosRequestConfig;
-    constructor(option?: IClientOption);
+    constructor(option?: RClientOption);
     setRequestInterceptors(interceptors: IReqInterceptor[]): void;
     setResponseInterceptors(interceptors: IResInterceptor[]): void;
     appendRequestInterceptor(interceptor: IReqInterceptor): void;
@@ -32,4 +32,3 @@ export declare class RClient {
     get(url: string, config: AxiosRequestConfig): Promise<AxiosResponse<any, any>>;
 }
 export declare const rClient: RClient;
-export {};

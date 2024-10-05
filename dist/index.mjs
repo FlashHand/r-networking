@@ -9,13 +9,13 @@ var RClient = class {
     if (option) {
       this.defaultConfig = Object.assign(this.defaultConfig, option.config);
       this._axiosClient = axios.create(this.defaultConfig);
-      option.interceptors.requestInterceptors.forEach((interceptor) => {
+      option.interceptors?.requestInterceptors.forEach((interceptor) => {
         this._axiosClient.interceptors.request.use(
           interceptor.fullfilled,
           interceptor.rejected
         );
       });
-      option.interceptors.responseInterceptors.forEach((interceptor) => {
+      option.interceptors?.responseInterceptors.forEach((interceptor) => {
         this._axiosClient.interceptors.response.use(
           interceptor.fullfilled,
           interceptor.rejected

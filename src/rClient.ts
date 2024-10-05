@@ -7,9 +7,9 @@ export interface IResInterceptor {
   fullfilled: (config: AxiosResponse) => Promise<AxiosResponse>
   rejected: (error: any) => void
 }
-interface IClientOption{
-  config: AxiosRequestConfig;
-  interceptors:{
+export interface RClientOption{
+  config?: AxiosRequestConfig;
+  interceptors?:{
     requestInterceptors: IReqInterceptor[];
     responseInterceptors: IResInterceptor[];
 
@@ -26,17 +26,17 @@ export class RClient{
     timeout: 20000,
     headers: { 'Content-Type': 'application/json' }
   }
-  constructor(option?:IClientOption) {
+  constructor(option?:RClientOption) {
     if (option){
       this.defaultConfig = Object.assign(this.defaultConfig, option.config);
       this._axiosClient = axios.create(this.defaultConfig);
-      option.interceptors.requestInterceptors.forEach((interceptor) => {
+      option.interceptors?.requestInterceptors.forEach((interceptor) => {
         this._axiosClient.interceptors.request.use(
           interceptor.fullfilled,
           interceptor.rejected
         )
       })
-      option.interceptors.responseInterceptors.forEach((interceptor) => {
+      option.interceptors?.responseInterceptors.forEach((interceptor) => {
         this._axiosClient.interceptors.response.use(
           interceptor.fullfilled,
           interceptor.rejected
