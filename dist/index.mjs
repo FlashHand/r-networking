@@ -59,12 +59,15 @@ var RClient = class {
   }
   post(url, postConfig) {
     let body = null;
-    if (postConfig.body) {
+    if (postConfig?.body) {
       body = postConfig.body;
     }
-    const requestConfig = {
-      ...postConfig.config
-    };
+    let requestConfig = {};
+    if (postConfig?.config) {
+      requestConfig = {
+        ...postConfig.config
+      };
+    }
     return this._axiosClient.post(url, body, requestConfig);
   }
   get(url, config) {

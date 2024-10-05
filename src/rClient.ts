@@ -83,14 +83,18 @@ export class RClient{
     this._axiosClient.defaults.adapter = adapter
   }
 
-  post(url:string,postConfig:RPostConfig){
+  post(url:string,postConfig?:RPostConfig){
     let body = null;
-    if (postConfig.body){
+    if (postConfig?.body){
       body = postConfig.body
     }
-    const requestConfig = {
-      ...postConfig.config
-    };
+    let requestConfig = {};
+    if (postConfig?.config){
+      requestConfig = {
+        ...postConfig.config
+      };
+    }
+
     return this._axiosClient.post(url,body,requestConfig)
   }
 
