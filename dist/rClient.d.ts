@@ -28,7 +28,7 @@ export declare class RClient {
     appendResponseInterceptor(interceptor: IResInterceptor): void;
     setBaseURL(baseURL: string): void;
     setAdapter(adapter: any): void;
-    post(url: string, postConfig?: RPostConfig): Promise<AxiosResponse<any, any>>;
-    get(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse<any, any>>;
+    post<T = any>(url: string, postConfig?: RPostConfig): Promise<T>;
+    get<T = any>(url: string, config?: AxiosRequestConfig): Promise<T>;
 }
 export declare const rClient: RClient;
