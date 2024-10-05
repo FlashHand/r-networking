@@ -1,3 +1,2 @@
-import { BasicClient } from "./basicClient";
-export { BasicClient } from './basicClient';
-export declare const rClient: BasicClient;
+import { RClient } from "./rClient";
+export declare const rClient: RClient;

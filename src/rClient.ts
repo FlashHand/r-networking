@@ -16,7 +16,7 @@ interface IClientOption{
   }
 }
 
-interface IPostConfig{
+export interface RPostConfig{
   body?:any
   config:AxiosRequestConfig
 }
@@ -83,7 +83,7 @@ export class RClient{
     this._axiosClient.defaults.adapter = adapter
   }
 
-  post(url:string,postConfig:IPostConfig){
+  post(url:string,postConfig:RPostConfig){
     const requestConfig = {
       ...postConfig.config
     };

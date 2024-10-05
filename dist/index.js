@@ -18,6 +18,10 @@ var __copyProps = (to, from, except, desc) => {
   return to;
 };
 var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+  // If the importer is in node compatibility mode or this is not an ESM
+  // file that has been converted to a CommonJS file using a Babel-
+  // compatible transform (i.e. "__esModule" has not been set), then set
+  // "default" to the CommonJS "module.exports" for node compatibility.
   isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
   mod
 ));
@@ -26,136 +30,83 @@ var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: tru
 // src/index.ts
 var src_exports = {};
 __export(src_exports, {
-  BasicClient: () => BasicClient,
   rClient: () => rClient
 });
 module.exports = __toCommonJS(src_exports);
 
-// src/basicClient.ts
+// src/rClient.ts
 var import_axios = __toESM(require("axios"));
-var import_qs = __toESM(require("qs"));
-var BasicClient = class {
-  constructor(config, interceptors) {
+var RClient = class {
+  constructor(option) {
     this.defaultConfig = {
       timeout: 2e4,
       headers: { "Content-Type": "application/json" }
     };
-    this.defaultConfig = Object.assign(this.defaultConfig, config);
-    this.axiosClient = import_axios.default.create(config);
-    interceptors?.requestInterceptors?.forEach((interceptor) => {
-      this.axiosClient.interceptors.request.use(
+    if (option) {
+      this.defaultConfig = Object.assign(this.defaultConfig, option.config);
+      this._axiosClient = import_axios.default.create(this.defaultConfig);
+      option.interceptors.requestInterceptors.forEach((interceptor) => {
+        this._axiosClient.interceptors.request.use(
+          interceptor.fullfilled,
+          interceptor.rejected
+        );
+      });
+      option.interceptors.responseInterceptors.forEach((interceptor) => {
+        this._axiosClient.interceptors.response.use(
+          interceptor.fullfilled,
+          interceptor.rejected
+        );
+      });
+    } else {
+      this._axiosClient = import_axios.default.create(this.defaultConfig);
+    }
+  }
+  setRequestInterceptors(interceptors) {
+    this._axiosClient.interceptors.request.clear();
+    interceptors.forEach((interceptor) => {
+      this._axiosClient.interceptors.request.use(
         interceptor.fullfilled,
         interceptor.rejected
       );
     });
-    interceptors?.responseInterceptors?.forEach((interceptor) => {
-      this.axiosClient.interceptors.response.use(
+  }
+  setResponseInterceptors(interceptors) {
+    this._axiosClient.interceptors.response.clear();
+    interceptors.forEach((interceptor) => {
+      this._axiosClient.interceptors.response.use(
         interceptor.fullfilled,
         interceptor.rejected
       );
     });
+  }
+  appendRequestInterceptor(interceptor) {
+    this._axiosClient.interceptors.request.use(interceptor.fullfilled, interceptor.rejected);
+  }
+  appendResponseInterceptor(interceptor) {
+    this._axiosClient.interceptors.response.use(interceptor.fullfilled, interceptor.rejected);
   }
   setBaseURL(baseURL) {
     this.defaultConfig.baseURL = baseURL;
-    this.axiosClient.defaults.baseURL = baseURL;
+    this._axiosClient.defaults.baseURL = baseURL;
   }
   setAdapter(adapter) {
     this.defaultConfig.adapter = adapter;
-    this.axiosClient.defaults.adapter = adapter;
+    this._axiosClient.defaults.adapter = adapter;
   }
-  async postBody(url, body, params, config) {
-    let postConfig = Object.assign({}, this.defaultConfig, config);
-    if (params) {
-      postConfig.params = params;
-      postConfig.paramsSerializer = (params2) => {
-        return import_qs.default.stringify(params2, { arrayFormat: "indices" });
-      };
-    }
-    const res = await this.axiosClient.post(url, body, postConfig);
-    return res.data;
-  }
-  async post(url, params, config) {
-    let postConfig = Object.assign({}, this.defaultConfig, config);
-    const res = await this.axiosClient.post(url, params, postConfig);
-    return res.data;
-  }
-  async put(url, body, params, config) {
-    let postConfig = Object.assign({}, this.defaultConfig, config);
-    if (params) {
-      postConfig.params = params;
-      postConfig.paramsSerializer = (params2) => {
-        return import_qs.default.stringify(params2, { arrayFormat: "indices" });
-      };
-    }
-    const res = await this.axiosClient.put(url, body, postConfig);
-    return res.data;
-  }
-  async delete(url, params, config) {
-    const getConfig = {
-      params,
-      paramsSerializer: (params2) => {
-        return import_qs.default.stringify(params2, { arrayFormat: "indices" });
-      }
+  post(url, postConfig) {
+    const requestConfig = {
+      ...postConfig.config
     };
-    const currentConfig = Object.assign(getConfig, this.defaultConfig);
-    const res = await this.axiosClient.delete(url, currentConfig);
-    return res.data;
+    return this._axiosClient.post(url, postConfig.body, requestConfig);
   }
-  async patch(url, body, params, config) {
-    let postConfig = Object.assign({}, this.defaultConfig, config);
-    if (params) {
-      postConfig.params = params;
-      postConfig.paramsSerializer = (params2) => {
-        return import_qs.default.stringify(params2, { arrayFormat: "indices" });
-      };
-    }
-    const res = await this.axiosClient.patch(url, body, postConfig);
-    return res.data;
-  }
-  async postForm(url, params, config) {
-    const postConfig = Object.assign({}, this.defaultConfig, config);
-    const res = await this.axiosClient.post(url, import_qs.default.stringify(params), postConfig);
-    return res.data;
-  }
-  async get(url, params, config) {
-    const getConfig = {
-      params,
-      paramsSerializer: (params2) => {
-        return import_qs.default.stringify(params2, { arrayFormat: "indices" });
-      }
-    };
-    const currentConfig = Object.assign(getConfig, this.defaultConfig);
-    const res = await this.axiosClient.get(url, currentConfig);
-    return res.data;
-  }
-  appendRequestInterceptor(interceptor) {
-    this.axiosClient.interceptors.request.use(interceptor.fullfilled, interceptor.rejected);
-  }
-  appendResponseInterceptor(interceptor) {
-    this.axiosClient.interceptors.response.use(interceptor.fullfilled, interceptor.rejected);
-  }
-  setRequestInterceptors(interceptor) {
-    interceptor.forEach((interceptor2) => {
-      this.axiosClient.interceptors.request.use(
-        interceptor2.fullfilled,
-        interceptor2.rejected
-      );
-    });
-  }
-  setResponseInterceptors(interceptor) {
-    interceptor.forEach((interceptor2) => {
-      this.axiosClient.interceptors.response.use(
-        interceptor2.fullfilled,
-        interceptor2.rejected
-      );
-    });
+  get(url, config) {
+    return this._axiosClient.get(url, config);
   }
 };
 
 // src/index.ts
-var rClient = new BasicClient();
+var rClient = new RClient();
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  BasicClient,
   rClient
 });
