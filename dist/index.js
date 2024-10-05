@@ -95,13 +95,20 @@ var RClient = class {
     this._axiosClient.defaults.adapter = adapter;
   }
   post(url, postConfig) {
+    let body = null;
+    if (postConfig.body) {
+      body = postConfig.body;
+    }
     const requestConfig = {
       ...postConfig.config
     };
-    return this._axiosClient.post(url, postConfig.body, requestConfig);
+    return this._axiosClient.post(url, body, requestConfig);
   }
   get(url, config) {
-    return this._axiosClient.get(url, config);
+    const requestConfig = {
+      ...config
+    };
+    return this._axiosClient.get(url, requestConfig);
   }
 };
 var rClient = new RClient();
