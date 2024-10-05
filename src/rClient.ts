@@ -94,3 +94,4 @@ export class RClient{
     return this._axiosClient.get(url,config)
   }
 }
+export const rClient = new RClient();

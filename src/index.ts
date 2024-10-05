@@ -1,2 +1,1 @@
-import {RClient} from "./rClient";
-export const rClient = new RClient();
+export { RClient,rClient } from './rClient';

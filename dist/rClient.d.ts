@@ -31,4 +31,5 @@ export declare class RClient {
     post(url: string, postConfig: RPostConfig): Promise<AxiosResponse<any, any>>;
     get(url: string, config: AxiosRequestConfig): Promise<AxiosResponse<any, any>>;
 }
+export declare const rClient: RClient;
 export {};

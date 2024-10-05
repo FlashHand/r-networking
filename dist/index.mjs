@@ -67,9 +67,8 @@ var RClient = class {
     return this._axiosClient.get(url, config);
   }
 };
-
-// src/index.ts
 var rClient = new RClient();
 export {
+  RClient,
   rClient
 };

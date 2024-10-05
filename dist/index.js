@@ -30,6 +30,7 @@ var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: tru
 // src/index.ts
 var src_exports = {};
 __export(src_exports, {
+  RClient: () => RClient,
   rClient: () => rClient
 });
 module.exports = __toCommonJS(src_exports);
@@ -103,10 +104,9 @@ var RClient = class {
     return this._axiosClient.get(url, config);
   }
 };
-
-// src/index.ts
 var rClient = new RClient();
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
+  RClient,
   rClient
 });
