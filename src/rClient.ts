@@ -84,14 +84,21 @@ export class RClient{
   }
 
   post(url:string,postConfig:RPostConfig){
+    let body = null;
+    if (postConfig.body){
+      body = postConfig.body
+    }
     const requestConfig = {
       ...postConfig.config
     };
-    return this._axiosClient.post(url,postConfig.body,requestConfig)
+    return this._axiosClient.post(url,body,requestConfig)
   }
 
-  get(url:string,config:AxiosRequestConfig){
-    return this._axiosClient.get(url,config)
+  get(url:string,config?:AxiosRequestConfig){
+    const requestConfig = {
+      ...config
+    }
+    return this._axiosClient.get(url, requestConfig);
   }
 }
 export const rClient = new RClient();
