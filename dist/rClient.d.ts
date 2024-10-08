@@ -1,34 +1,41 @@
 import { InternalAxiosRequestConfig, AxiosResponse, AxiosRequestConfig } from "axios";
-export interface IReqInterceptor {
+export interface RReqInterceptor {
     fullfilled: (config: InternalAxiosRequestConfig) => Promise<InternalAxiosRequestConfig>;
     rejected: (error: any) => void;
 }
-export interface IResInterceptor {
+export interface RResInterceptor {
     fullfilled: (config: AxiosResponse) => Promise<AxiosResponse>;
     rejected: (error: any) => void;
 }
 export interface RClientOption {
     config?: AxiosRequestConfig;
     interceptors?: {
-        requestInterceptors: IReqInterceptor[];
-        responseInterceptors: IResInterceptor[];
+        requestInterceptors: RReqInterceptor[];
+        responseInterceptors: RResInterceptor[];
     };
 }
 export interface RPostConfig {
+    url: string;
     body?: any;
-    config: AxiosRequestConfig;
+    params?: any;
+    axiosRequestConfig: AxiosRequestConfig;
+}
+export interface RGetConfig {
+    url: string;
+    params?: any;
+    axiosRequestConfig: AxiosRequestConfig;
 }
 export declare class RClient {
     private _axiosClient;
     defaultConfig: AxiosRequestConfig;
     constructor(option?: RClientOption);
-    setRequestInterceptors(interceptors: IReqInterceptor[]): void;
-    setResponseInterceptors(interceptors: IResInterceptor[]): void;
-    appendRequestInterceptor(interceptor: IReqInterceptor): void;
-    appendResponseInterceptor(interceptor: IResInterceptor): void;
+    setRequestInterceptors(interceptors: RReqInterceptor[]): void;
+    setResponseInterceptors(interceptors: RResInterceptor[]): void;
+    appendRequestInterceptor(interceptor: RReqInterceptor): void;
+    appendResponseInterceptor(interceptor: RResInterceptor): void;
     setBaseURL(baseURL: string): void;
     setAdapter(adapter: any): void;
-    post<T = any>(url: string, postConfig?: RPostConfig): Promise<T>;
-    get<T = any>(url: string, config?: AxiosRequestConfig): Promise<T>;
+    post<T = any>(config: RPostConfig): Promise<T>;
+    get<T = any>(config: RGetConfig): Promise<T>;
 }
 export declare const rClient: RClient;

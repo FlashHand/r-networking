@@ -1,33 +1,45 @@
 import axios, {AxiosInstance, InternalAxiosRequestConfig, AxiosResponse, AxiosRequestConfig} from "axios";
-export interface IReqInterceptor {
+
+export interface RReqInterceptor {
   fullfilled: (config: InternalAxiosRequestConfig) => Promise<InternalAxiosRequestConfig>
   rejected: (error: any) => void
 }
-export interface IResInterceptor {
+
+export interface RResInterceptor {
   fullfilled: (config: AxiosResponse) => Promise<AxiosResponse>
   rejected: (error: any) => void
 }
-export interface RClientOption{
+
+export interface RClientOption {
   config?: AxiosRequestConfig;
-  interceptors?:{
-    requestInterceptors: IReqInterceptor[];
-    responseInterceptors: IResInterceptor[];
+  interceptors?: {
+    requestInterceptors: RReqInterceptor[];
+    responseInterceptors: RResInterceptor[];
 
   }
 }
 
-export interface RPostConfig{
-  body?:any
-  config:AxiosRequestConfig
+export interface RPostConfig {
+  url: string;
+  body?: any;
+  params?: any;//query params
+  axiosRequestConfig: AxiosRequestConfig
 }
-export class RClient{
+export interface RGetConfig {
+  url: string;
+  params?: any;//query params
+  axiosRequestConfig: AxiosRequestConfig
+}
+
+export class RClient {
   private _axiosClient: AxiosInstance
   defaultConfig: AxiosRequestConfig = {
     timeout: 20000,
-    headers: { 'Content-Type': 'application/json' }
+    headers: {'Content-Type': 'application/json'}
   }
-  constructor(option?:RClientOption) {
-    if (option){
+
+  constructor(option?: RClientOption) {
+    if (option) {
       this.defaultConfig = Object.assign(this.defaultConfig, option.config);
       this._axiosClient = axios.create(this.defaultConfig);
       option.interceptors?.requestInterceptors.forEach((interceptor) => {
@@ -42,11 +54,12 @@ export class RClient{
           interceptor.rejected
         )
       })
-    }else {
+    } else {
       this._axiosClient = axios.create(this.defaultConfig);
     }
   }
-  setRequestInterceptors(interceptors:IReqInterceptor[]){
+
+  setRequestInterceptors(interceptors: RReqInterceptor[]) {
     this._axiosClient.interceptors.request.clear();
     interceptors.forEach((interceptor) => {
       this._axiosClient.interceptors.request.use(
@@ -55,7 +68,8 @@ export class RClient{
       )
     })
   }
-  setResponseInterceptors(interceptors:IResInterceptor[]){
+
+  setResponseInterceptors(interceptors: RResInterceptor[]) {
     this._axiosClient.interceptors.response.clear();
     interceptors.forEach((interceptor) => {
       this._axiosClient.interceptors.response.use(
@@ -65,11 +79,11 @@ export class RClient{
     })
   }
 
-  appendRequestInterceptor(interceptor: IReqInterceptor) {
+  appendRequestInterceptor(interceptor: RReqInterceptor) {
     this._axiosClient.interceptors.request.use(interceptor.fullfilled, interceptor.rejected)
   }
 
-  appendResponseInterceptor(interceptor: IResInterceptor) {
+  appendResponseInterceptor(interceptor: RResInterceptor) {
     this._axiosClient.interceptors.response.use(interceptor.fullfilled, interceptor.rejected)
   }
 
@@ -83,27 +97,35 @@ export class RClient{
     this._axiosClient.defaults.adapter = adapter
   }
 
-  post<T = any>(url:string,postConfig?:RPostConfig){
+  post<T = any>(config:RPostConfig) {
     let body = null;
-    if (postConfig?.body){
-      body = postConfig.body
+    if (config?.body) {
+      body = config.body
     }
-    let requestConfig = {};
-    if (postConfig?.config){
+    let requestConfig:AxiosRequestConfig = {};
+    if (config?.axiosRequestConfig) {
       requestConfig = {
-        ...postConfig.config
+        ...config.axiosRequestConfig
       };
     }
-
-    return this._axiosClient.post(url,body,requestConfig) as Promise<T>
-  }
-
-  async get<T = any>(url:string,config?:AxiosRequestConfig){
-    const requestConfig = {
-      ...config
+    if (config.params) {
+      requestConfig.params = config.params
     }
-    const res = await this._axiosClient.get(url, requestConfig);
-    return (res.data||null) as T;
+
+    return this._axiosClient.post(config.url, body, requestConfig) as Promise<T>
   }
+
+  async get<T = any>(config:RGetConfig) {
+    const requestConfig: AxiosRequestConfig = {
+      ...config
+    };
+    if (config.params) {
+      requestConfig.params = config.params
+    }
+    const res = await this._axiosClient.get(config.url, requestConfig);
+    return (res.data || null) as T;
+  }
+  
 }
+
 export const rClient = new RClient();

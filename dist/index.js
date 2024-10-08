@@ -94,24 +94,30 @@ var RClient = class {
     this.defaultConfig.adapter = adapter;
     this._axiosClient.defaults.adapter = adapter;
   }
-  post(url, postConfig) {
+  post(config) {
     let body = null;
-    if (postConfig?.body) {
-      body = postConfig.body;
+    if (config?.body) {
+      body = config.body;
     }
     let requestConfig = {};
-    if (postConfig?.config) {
+    if (config?.axiosRequestConfig) {
       requestConfig = {
-        ...postConfig.config
+        ...config.axiosRequestConfig
       };
     }
-    return this._axiosClient.post(url, body, requestConfig);
+    if (config.params) {
+      requestConfig.params = config.params;
+    }
+    return this._axiosClient.post(config.url, body, requestConfig);
   }
-  async get(url, config) {
+  async get(config) {
     const requestConfig = {
       ...config
     };
-    const res = await this._axiosClient.get(url, requestConfig);
+    if (config.params) {
+      requestConfig.params = config.params;
+    }
+    const res = await this._axiosClient.get(config.url, requestConfig);
     return res.data || null;
   }
 };
