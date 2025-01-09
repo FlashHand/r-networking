@@ -1,1 +1,2 @@
-export {RClient, rClient, RClientOption} from './rClient';
+export {RClient, rClient} from './rClient';
+export {RClientOption} from './type';
